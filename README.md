@@ -1,5 +1,5 @@
 # NLP
-Natural Language Processing project with Python frameworks.
+Natural Language Processing project with Python frameworks. NLP is a discipline where computer science, artificial intelligence and cognitive logic are intercepted, with the objective that machines can read and understand our language for decision making.
 
 ## Examples
 1. <a href="https://ansegura7.github.io/NLP/pages/NLP_SpaCy.html" >NLP with spaCy</a>
