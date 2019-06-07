@@ -1,8 +1,11 @@
 # NLP
-Natural Language Processing project with spaCy.
+Natural Language Processing project with Python frameworks.
+
+## Examples
+1. <a href="https://ansegura7.github.io/NLP/pages/NLP_SpaCy.html" >NLP with spaCy</a>
 
 ## Data
-The CiteSeer UMD collection is a standard text document collection, consisting of abstracts of research articles from Computer Science, which are sampled from the CiteSeer digital library.
+Books in plain text.
 
 ## Python Dependencies
 ```
