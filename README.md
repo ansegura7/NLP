@@ -3,6 +3,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 
 ## Examples
 1. <a href="https://ansegura7.github.io/NLP/pages/NLP_SpaCy.html" >NLP with spaCy</a>
+2. <a href="https://ansegura7.github.io/NLP/pages/NLP_Word2Vec.html" >Word Embedding with Gensim</a>
 
 ## Data
 Books in plain text.
@@ -12,6 +13,7 @@ Books in plain text.
     conda install -c conda-forge spacy
     python -m spacy download en
     python -m spacy download es
+    conda install -c anaconda gensim
 ```
 
 ## Contributing and Feedback

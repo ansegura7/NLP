@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>NLP_SpaCy</title>
+<title>NLP_Word2Vec</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13116,7 +13116,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Natural-Language-Processing-with-spaCy">Natural Language Processing with spaCy<a class="anchor-link" href="#Natural-Language-Processing-with-spaCy">&#182;</a></h1>
+<h1 id="Natural-Language-Processing-with-gensim">Natural Language Processing with gensim<a class="anchor-link" href="#Natural-Language-Processing-with-gensim">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -13125,7 +13125,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li><strong>Created by Andrés Segura Tinoco</strong></li>
-<li><strong>Created on June 04, 2019</strong></li>
+<li><strong>Created on June 09, 2019</strong></li>
 </ul>
 
 </div>
@@ -13134,15 +13134,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Natural language processing (NLP) is a discipline where computer science, artificial intelligence and cognitive logic are intercepted, with the objective that machines can read and understand our language for decision making.</p>
+<p><strong>Gensim</strong> is a Python library for topic modelling, document indexing and similarity retrieval with large corpora. Target audience is the natural language processing (NLP) and information retrieval (IR) community.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Example-with-a-document-in-Spanish">Example with a document in Spanish<a class="anchor-link" href="#Example-with-a-document-in-Spanish">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -13153,7 +13146,9 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load Python libraries</span>
 <span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13166,8 +13161,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load NLP libraries from spacy</span>
-<span class="kn">import</span> <span class="nn">spacy</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load NLP libraries from gensim and spacy</span>
+<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="k">import</span> <span class="n">Word2Vec</span>
+<span class="kn">import</span> <span class="nn">spacy.lang.en</span> <span class="k">as</span> <span class="nn">en</span>
 </pre></div>
 
     </div>
@@ -13207,11 +13203,32 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get text sample</span>
-<span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;../data/es/El Grillo del Hogar - Charles Dickens.txt&quot;</span>
-<span class="n">book_text</span> <span class="o">=</span> <span class="n">read_text_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;../data/en/The Adventures of Sherlock Holmes - Arthur Conan Doyle.txt&quot;</span>
+<span class="n">plain_text</span> <span class="o">=</span> <span class="n">read_text_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">plain_text</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[4]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>576467</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -13222,7 +13239,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show first 1000 characters of document</span>
-<span class="n">book_text</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">plain_text</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13241,7 +13258,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#39;El grillo del hogar\n(The Cricket of the Heard)\nde\n\nCharles Dickens\nEste libro electrónico es cortesía de\n\nhttp://www.dominiopublico.es\nPrimer grito\nCapítulo I\nCapítulo II\nCapítulo III\nCapítulo IV\nCapítulo V\nCapítulo VI\nSegundo grito\nCapítulo I\nCapítulo II\nCapítulo III\nCapítulo IV\nCapítulo V\nCapítulo VI\nTercer grito\nCapítulo I\nCapítulo II\nCapítulo III\nCapítulo IV\nCapítulo V\nCapítulo VI\n\nPrimer grito\n- I -\nEmpezó el puchero. No necesito que me contéis lo que la señora Peerybingle dijera; yo me entiendo. Dejad que la señora Peerybingle se pase hasta la consumación de los siglos asegurando la imposibilidad de decidir cuál empezó: yo digo que fue el puchero. Tengo motivos para saberlo. El puchero empezó cinco minutos antes que el grillo, según el relojito holandés de cuadrante barnizado situado en el rincón.\n¡Como si el reloj no hubiese cesado de tocar! ¡Como si el segadorcido de movimientos convulsivos y bruscos que lo remata, paseando la hoz de derecha a izquierda y luego de izquierda a d&#39;</pre>
+<pre>&#34;\nProject Gutenberg&#39;s The Adventures of Sherlock Holmes, by Arthur Conan Doyle\n\nThis eBook is for the use of anyone anywhere at no cost and with\nalmost no restrictions whatsoever.  You may copy it, give it away or\nre-use it under the terms of the Project Gutenberg License included\nwith this eBook or online at www.gutenberg.net\n\n\nTitle: The Adventures of Sherlock Holmes\n\nAuthor: Arthur Conan Doyle\n\nRelease Date: November 29, 2002 [EBook #1661]\nLast Updated: May 20, 2019\n\nLanguage: English\n\nCharacter set encoding: UTF-8\n\n*** START OF THIS PROJECT GUTENBERG EBOOK THE ADVENTURES OF SHERLOCK HOLMES ***\n\n\n\nProduced by an anonymous Project Gutenberg volunteer and Jose Menendez\n\n\n\ncover\n\n\n\nThe Adventures of Sherlock Holmes\n\n\n\nby Arthur Conan Doyle\n\n\n\nContents\n\n\n   I.     A Scandal in Bohemia\n   II.    The Red-Headed League\n   III.   A Case of Identity\n   IV.    The Boscombe Valley Mystery\n   V.     The Five Orange Pips\n   VI.    The Man with the Twisted Lip\n   VII.   The Adventure of the Blue C&#34;</pre>
 </div>
 
 </div>
@@ -13253,7 +13270,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-2---Create-a-NLP-model">Step 2 - Create a NLP model<a class="anchor-link" href="#Step-2---Create-a-NLP-model">&#182;</a></h3>
+<h3 id="Step-2---Tokenize-and-remove-Stopwords">Step 2 - Tokenize and remove Stopwords<a class="anchor-link" href="#Step-2---Tokenize-and-remove-Stopwords">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13262,32 +13279,48 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create NLP model for spanish language</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
-<span class="n">doc_es</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">book_text</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Cleaing the text</span>
+<span class="n">clean_text</span> <span class="o">=</span> <span class="n">plain_text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">clean_text</span> <span class="o">=</span> <span class="n">clean_text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">clean_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^a-zA-Z.]&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">clean_text</span><span class="p">)</span>
+<span class="n">clean_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">clean_text</span><span class="p">)</span>
+<span class="n">clean_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\.+&#39;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">clean_text</span><span class="p">)</span>
+<span class="n">clean_text</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[6]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;.project gutenberg s the adventures of sherlock holmes by arthur conan doyle.this ebook is for the use of anyone anywhere at no cost and with.almost no restrictions whatsoever. you may copy it give it away or.re use it under the terms of the project gutenberg license included.with this ebook or online at www.gutenberg.net.title the adventures of sherlock holmes.author arthur conan doyle.release date november ebook .last updated may .language english.character set encoding utf . start of this project gutenberg ebook the adventures of sherlock holmes .produced by an anonymous project gutenberg volunteer and jose menendez.cover.the adventures of sherlock holmes.by arthur conan doyle.contents. i. a scandal in bohemia. ii. the red headed league. iii. a case of identity. iv. the boscombe valley mystery. v. the five orange pips. vi. the man with the twisted lip. vii. the adventure of the blue carbuncle. viii. the adventure of the speckled band. ix. the adventure of the engineer s thumb. x. th&#39;</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Vocabulary:</strong> unique words of the document.</p>
+
+</div>
 
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get vocabulary</span>
-<span class="n">vocabulary_es</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">token</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc_es</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_stop</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">is_alpha</span><span class="p">))</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">vocabulary_es</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tokenize text in sentences</span>
+<span class="n">sentence_list</span> <span class="o">=</span> <span class="n">clean_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">sentence_list</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13306,7 +13339,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>5630</pre>
+<pre>14592</pre>
 </div>
 
 </div>
@@ -13320,8 +13353,87 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show vocabulary</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">vocabulary_es</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">200</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tokenize sentences in words</span>
+<span class="n">word_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentence_list</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">word_list</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[8]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[&#39;project&#39;,
+  &#39;gutenberg&#39;,
+  &#39;s&#39;,
+  &#39;the&#39;,
+  &#39;adventures&#39;,
+  &#39;of&#39;,
+  &#39;sherlock&#39;,
+  &#39;holmes&#39;,
+  &#39;by&#39;,
+  &#39;arthur&#39;,
+  &#39;conan&#39;,
+  &#39;doyle&#39;],
+ [&#39;this&#39;,
+  &#39;ebook&#39;,
+  &#39;is&#39;,
+  &#39;for&#39;,
+  &#39;the&#39;,
+  &#39;use&#39;,
+  &#39;of&#39;,
+  &#39;anyone&#39;,
+  &#39;anywhere&#39;,
+  &#39;at&#39;,
+  &#39;no&#39;,
+  &#39;cost&#39;,
+  &#39;and&#39;,
+  &#39;with&#39;],
+ [&#39;almost&#39;, &#39;no&#39;, &#39;restrictions&#39;, &#39;whatsoever&#39;],
+ [&#39;you&#39;, &#39;may&#39;, &#39;copy&#39;, &#39;it&#39;, &#39;give&#39;, &#39;it&#39;, &#39;away&#39;, &#39;or&#39;],
+ [&#39;re&#39;,
+  &#39;use&#39;,
+  &#39;it&#39;,
+  &#39;under&#39;,
+  &#39;the&#39;,
+  &#39;terms&#39;,
+  &#39;of&#39;,
+  &#39;the&#39;,
+  &#39;project&#39;,
+  &#39;gutenberg&#39;,
+  &#39;license&#39;,
+  &#39;included&#39;],
+ [&#39;with&#39;, &#39;this&#39;, &#39;ebook&#39;, &#39;or&#39;, &#39;online&#39;, &#39;at&#39;, &#39;www&#39;],
+ [&#39;gutenberg&#39;],
+ [&#39;net&#39;],
+ [&#39;title&#39;, &#39;the&#39;, &#39;adventures&#39;, &#39;of&#39;, &#39;sherlock&#39;, &#39;holmes&#39;],
+ [&#39;author&#39;, &#39;arthur&#39;, &#39;conan&#39;, &#39;doyle&#39;]]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stopwords_en</span> <span class="o">=</span> <span class="n">en</span><span class="o">.</span><span class="n">stop_words</span><span class="o">.</span><span class="n">STOP_WORDS</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stopwords_en</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13338,52 +13450,9 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;cae&#39;, &#39;estáis&#39;, &#39;singular&#39;, &#39;único&#39;, &#39;contenido&#39;, &#39;cantado&#39;, &#39;imaginar&#39;, &#39;paterna&#39;, &#39;pronunciada&#39;, &#39;atenerse&#39;, &#39;insultos&#39;, &#39;torta&#39;, &#39;grato&#39;, &#39;deferencia&#39;, &#39;viendo&#39;, &#39;advertíase&#39;, &#39;holandeses&#39;, &#39;cara&#39;, &#39;estalactitas&#39;, &#39;hablando&#39;, &#39;fielding&#39;, &#39;cruzando&#39;, &#39;experiencia&#39;, &#39;brutal&#39;, &#39;redonda&#39;, &#39;sacudir&#39;, &#39;guardiana&#39;, &#39;matar&#39;, &#39;cuyos&#39;, &#39;tomando&#39;, &#39;frotó&#39;, &#39;respirando&#39;, &#39;rebosantes&#39;, &#39;pegar&#39;, &#39;llorado&#39;, &#39;obtener&#39;, &#39;voluntariamente&#39;, &#39;rechazándole&#39;, &#39;suavemente&#39;, &#39;tirasen&#39;, &#39;sordo&#39;, &#39;amarga&#39;, &#39;afirmando&#39;, &#39;acostumbrado&#39;, &#39;seguramente&#39;, &#39;precioso&#39;, &#39;sorpresa&#39;, &#39;maravillas&#39;, &#39;i&#39;, &#39;amueblado&#39;, &#39;quedar&#39;, &#39;obstáculo&#39;, &#39;pronunciado&#39;, &#39;crudo&#39;, &#39;resuelta&#39;, &#39;lumbago&#39;, &#39;dejaré&#39;, &#39;extensiones&#39;, &#39;tanta&#39;, &#39;segadorcido&#39;, &#39;irreprochable&#39;, &#39;llevándose&#39;, &#39;queridas&#39;, &#39;olvidar&#39;, &#39;acento&#39;, &#39;querido&#39;, &#39;igualmente&#39;, &#39;cubriéndose&#39;, &#39;confianza&#39;, &#39;experimentaba&#39;, &#39;parecieron&#39;, &#39;quedaros&#39;, &#39;artistas&#39;, &#39;temblorcillo&#39;, &#39;llamar&#39;, &#39;ausencia&#39;, &#39;respuesta&#39;, &#39;incoherente&#39;, &#39;imperfecta&#39;, &#39;forzosamente&#39;, &#39;durado&#39;, &#39;subido&#39;, &#39;prohibía&#39;, &#39;negruzca&#39;, &#39;soltarme&#39;, &#39;vendrá&#39;, &#39;comprometo&#39;, &#39;frivolidad&#39;, &#39;bastón&#39;, &#39;estrechaban&#39;, &#39;ocupadísima&#39;, &#39;quedarlo&#39;, &#39;trabajaron&#39;, &#39;planta&#39;, &#39;petrificada&#39;, &#39;pronta&#39;, &#39;taburetillo&#39;, &#39;procurado&#39;, &#39;necesito&#39;, &#39;pastelillos&#39;, &#39;granizo&#39;, &#39;penséis&#39;, &#39;esperaban&#39;, &#39;rendir&#39;, &#39;distraída&#39;, &#39;poste&#39;, &#39;exploradora&#39;, &#39;anciana&#39;, &#39;carruajes&#39;, &#39;peatones&#39;, &#39;proyecto&#39;, &#39;tenían&#39;, &#39;notábase&#39;, &#39;recibirlos&#39;, &#39;esfera&#39;, &#39;fatalidad&#39;, &#39;acompañaros&#39;, &#39;llamadas&#39;, &#39;averías&#39;, &#39;segadorcito&#39;, &#39;apiadaos&#39;, &#39;conocimientos&#39;, &#39;vago&#39;, &#39;retrasar&#39;, &#39;bajita&#39;, &#39;cumpleaños&#39;, &#39;cuento&#39;, &#39;hidalgos&#39;, &#39;inquietantes&#39;, &#39;llamaba&#39;, &#39;desordenada&#39;, &#39;admitirle&#39;, &#39;frecuentes&#39;, &#39;llegarán&#39;, &#39;distribuido&#39;, &#39;dormitorio&#39;, &#39;administrado&#39;, &#39;escuela&#39;, &#39;patio&#39;, &#39;hombre&#39;, &#39;extendió&#39;, &#39;policía&#39;, &#39;sueños&#39;, &#39;guía&#39;, &#39;abnegado&#39;, &#39;reconocer&#39;, &#39;pensáis&#39;, &#39;preferente&#39;, &#39;reunido&#39;, &#39;apasionadamente&#39;, &#39;merienda&#39;, &#39;avanzando&#39;, &#39;arpa&#39;, &#39;clandestinamente&#39;, &#39;acostumbrada&#39;, &#39;promesas&#39;, &#39;imprevisto&#39;, &#39;espejo&#39;, &#39;joven&#39;, &#39;ignoró&#39;, &#39;permitido&#39;, &#39;solícito&#39;, &#39;creyeseis&#39;, &#39;efectuará&#39;, &#39;delicadeza&#39;, &#39;rabioso&#39;, &#39;maridos&#39;, &#39;indicar&#39;, &#39;antiguo&#39;, &#39;orgullo&#39;, &#39;bondadoso&#39;, &#39;prontitud&#39;, &#39;deciros&#39;, &#39;areópago&#39;, &#39;renunciar&#39;, &#39;ruiseñor&#39;, &#39;oyente&#39;, &#39;suponer&#39;, &#39;gruesa&#39;, &#39;dificilísimas&#39;, &#39;respetuosa&#39;, &#39;conclusiones&#39;, &#39;interno&#39;, &#39;pasión&#39;, &#39;emprendió&#39;, &#39;euclides&#39;, &#39;valer&#39;, &#39;reconoceréis&#39;, &#39;procedían&#39;, &#39;cuadrúpedos&#39;, &#39;conversaciones&#39;, &#39;humedad&#39;, &#39;embaracen&#39;, &#39;disipar&#39;, &#39;resultaban&#39;, &#39;resbaladizo&#39;, &#39;animación&#39;, &#39;resonar&#39;, &#39;gorro&#39;, &#39;favorito&#39;]
+<pre>{&#39;not&#39;, &#39;empty&#39;, &#39;afterwards&#39;, &#39;that&#39;, &#39;each&#39;, &#39;anyhow&#39;, &#39;she&#39;, &#39;themselves&#39;, &#39;hereby&#39;, &#39;their&#39;, &#39;same&#39;, &#39;who&#39;, &#39;now&#39;, &#39;meanwhile&#39;, &#39;as&#39;, &#39;and&#39;, &#39;since&#39;, &#39;with&#39;, &#39;without&#39;, &#39;was&#39;, &#39;please&#39;, &#39;to&#39;, &#39;herein&#39;, &#39;otherwise&#39;, &#39;under&#39;, &#39;however&#39;, &#39;can&#39;, &#39;herself&#39;, &#39;make&#39;, &#39;never&#39;, &#39;such&#39;, &#39;then&#39;, &#39;eight&#39;, &#39;our&#39;, &#39;these&#39;, &#39;amount&#39;, &#39;sixty&#39;, &#39;nor&#39;, &#39;just&#39;, &#39;forty&#39;, &#39;often&#39;, &#39;could&#39;, &#39;less&#39;, &#39;few&#39;, &#39;every&#39;, &#39;no&#39;, &#39;most&#39;, &#39;here&#39;, &#39;me&#39;, &#39;were&#39;, &#39;fifty&#39;, &#39;whereafter&#39;, &#39;anywhere&#39;, &#34;&#39;re&#34;, &#39;but&#39;, &#39;has&#39;, &#39;move&#39;, &#39;should&#39;, &#39;wherein&#39;, &#39;some&#39;, &#39;on&#39;, &#39;yours&#39;, &#39;first&#39;, &#39;if&#39;, &#39;next&#39;, &#39;ours&#39;, &#39;serious&#39;, &#39;thereupon&#39;, &#39;used&#39;, &#39;wherever&#39;, &#39;amongst&#39;, &#39;in&#39;, &#39;latter&#39;, &#39;somehow&#39;, &#39;side&#39;, &#39;almost&#39;, &#39;do&#39;, &#39;upon&#39;, &#39;your&#39;, &#39;through&#39;, &#39;been&#39;, &#39;‘s&#39;, &#39;except&#39;, &#39;full&#39;, &#39;what&#39;, &#39;into&#39;, &#39;show&#39;, &#39;ten&#39;, &#39;call&#39;, &#39;several&#39;, &#39;there&#39;, &#39;yourself&#39;, &#39;third&#39;, &#34;&#39;d&#34;, &#39;beforehand&#39;, &#39;least&#39;, &#39;seems&#39;, &#39;of&#39;, &#39;how&#39;, &#39;so&#39;, &#39;‘m&#39;, &#39;alone&#39;, &#39;beyond&#39;, &#39;thus&#39;, &#39;nine&#39;, &#39;mine&#39;, &#39;across&#39;, &#39;while&#39;, &#39;are&#39;, &#39;due&#39;, &#39;must&#39;, &#39;will&#39;, &#39;together&#39;, &#39;both&#39;, &#39;within&#39;, &#39;against&#39;, &#39;eleven&#39;, &#39;would&#39;, &#39;therefore&#39;, &#39;became&#39;, &#39;out&#39;, &#39;myself&#39;, &#39;else&#39;, &#39;we&#39;, &#39;’d&#39;, &#39;too&#39;, &#39;where&#39;, &#39;whereupon&#39;, &#39;own&#39;, &#39;by&#39;, &#39;itself&#39;, &#39;everywhere&#39;, &#39;thence&#39;, &#39;nowhere&#39;, &#39;either&#39;, &#39;‘ll&#39;, &#34;&#39;ll&#34;, &#39;at&#39;, &#39;made&#39;, &#39;ourselves&#39;, &#39;whence&#39;, &#39;everyone&#39;, &#39;latterly&#39;, &#39;any&#39;, &#39;regarding&#39;, &#39;see&#39;, &#39;via&#39;, &#39;because&#39;, &#39;cannot&#39;, &#39;becomes&#39;, &#39;done&#39;, &#39;go&#39;, &#39;someone&#39;, &#39;becoming&#39;, &#39;doing&#39;, &#39;anything&#39;, &#39;seeming&#39;, &#34;&#39;s&#34;, &#39;five&#39;, &#39;moreover&#39;, &#39;’re&#39;, &#39;up&#39;, &#39;whom&#39;, &#34;&#39;m&#34;, &#39;ever&#39;, &#39;besides&#39;, &#39;always&#39;, &#39;n’t&#39;, &#39;’ve&#39;, &#39;or&#39;, &#39;front&#39;, &#39;‘ve&#39;, &#39;top&#39;, &#39;whereas&#39;, &#39;they&#39;, &#39;seemed&#39;, &#39;re&#39;, &#39;give&#39;, &#39;before&#39;, &#39;thru&#39;, &#39;why&#39;, &#39;those&#39;, &#39;well&#39;, &#39;whoever&#39;, &#39;between&#39;, &#39;from&#39;, &#39;more&#39;, &#39;part&#39;, &#39;them&#39;, &#39;being&#39;, &#39;ca&#39;, &#39;his&#39;, &#39;back&#39;, &#39;quite&#39;, &#39;further&#39;, &#39;noone&#39;, &#39;again&#39;, &#39;other&#39;, &#39;sometimes&#39;, &#39;beside&#39;, &#39;whose&#39;, &#39;per&#39;, &#39;did&#39;, &#39;than&#39;, &#39;when&#39;, &#39;thereby&#39;, &#39;hereupon&#39;, &#39;namely&#39;, &#39;whether&#39;, &#39;although&#39;, &#39;you&#39;, &#39;below&#39;, &#39;though&#39;, &#39;even&#39;, &#39;formerly&#39;, &#39;name&#39;, &#39;throughout&#39;, &#34;n&#39;t&#34;, &#39;onto&#39;, &#39;also&#39;, &#39;rather&#39;, &#39;whatever&#39;, &#39;whereby&#39;, &#39;might&#39;, &#39;therein&#39;, &#39;its&#39;, &#39;become&#39;, &#39;using&#39;, &#39;along&#39;, &#39;indeed&#39;, &#39;only&#39;, &#39;an&#39;, &#39;us&#39;, &#39;may&#39;, &#39;none&#39;, &#39;various&#39;, &#39;fifteen&#39;, &#39;four&#39;, &#39;yourselves&#39;, &#39;twenty&#39;, &#39;hundred&#39;, &#39;unless&#39;, &#39;does&#39;, &#39;he&#39;, &#39;hereafter&#39;, &#39;perhaps&#39;, &#39;down&#39;, &#39;six&#39;, &#39;whither&#39;, &#39;’s&#39;, &#39;during&#39;, &#39;anyone&#39;, &#39;seem&#39;, &#39;‘re&#39;, &#39;which&#39;, &#39;another&#39;, &#39;mostly&#39;, &#39;all&#39;, &#39;i&#39;, &#39;many&#39;, &#39;’ll&#39;, &#39;had&#39;, &#39;nobody&#39;, &#39;one&#39;, &#39;yet&#39;, &#39;everything&#39;, &#39;off&#39;, &#39;for&#39;, &#39;over&#39;, &#39;former&#39;, &#39;put&#39;, &#39;sometime&#39;, &#39;it&#39;, &#39;others&#39;, &#39;something&#39;, &#39;two&#39;, &#39;towards&#39;, &#39;’m&#39;, &#39;behind&#39;, &#39;bottom&#39;, &#39;until&#39;, &#39;nevertheless&#39;, &#39;‘d&#39;, &#39;above&#39;, &#39;after&#39;, &#39;my&#39;, &#39;among&#39;, &#39;take&#39;, &#39;whenever&#39;, &#39;really&#39;, &#39;thereafter&#39;, &#39;last&#39;, &#39;already&#39;, &#39;elsewhere&#39;, &#39;get&#39;, &#39;very&#39;, &#39;her&#39;, &#39;be&#39;, &#39;enough&#39;, &#39;around&#39;, &#39;hers&#39;, &#39;somewhere&#39;, &#39;anyway&#39;, &#39;this&#39;, &#39;much&#39;, &#39;n‘t&#39;, &#39;about&#39;, &#39;three&#39;, &#39;twelve&#39;, &#34;&#39;ve&#34;, &#39;say&#39;, &#39;keep&#39;, &#39;neither&#39;, &#39;still&#39;, &#39;hence&#39;, &#39;is&#39;, &#39;nothing&#39;, &#39;the&#39;, &#39;him&#39;, &#39;toward&#39;, &#39;have&#39;, &#39;a&#39;, &#39;himself&#39;, &#39;whole&#39;, &#39;once&#39;, &#39;am&#39;}
 </pre>
 </div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Stopwords:</strong> refers to the most common words in a language, which do not significantly affect the meaning of the text.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get unique stop-words</span>
-<span class="n">stop_words_es</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">token</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc_es</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_stop</span><span class="p">))</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">stop_words_es</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[9]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>416</pre>
-</div>
-
 </div>
 
 </div>
@@ -13395,8 +13464,12 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show unique stop-words</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">stop_words_es</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Remove stopwords</span>
+<span class="n">all_words</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word_list</span><span class="p">)):</span>
+    <span class="n">all_words</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_list</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords_en</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)])</span>
+
+<span class="n">all_words</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13409,127 +13482,66 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;propios&#39;, &#39;he&#39;, &#39;dicho&#39;, &#39;sido&#39;, &#39;te&#39;, &#39;mientras&#39;, &#39;que&#39;, &#39;buena&#39;, &#39;principalmente&#39;, &#39;tanto&#39;, &#39;horas&#39;, &#39;habían&#39;, &#39;nuevos&#39;, &#39;así&#39;, &#39;detrás&#39;, &#39;mejor&#39;, &#39;estamos&#39;, &#39;vaya&#39;, &#39;llevar&#39;, &#39;los&#39;, &#39;van&#39;, &#39;cuándo&#39;, &#39;creo&#39;, &#39;siguiente&#39;, &#39;ya&#39;, &#39;usted&#39;, &#39;cinco&#39;, &#39;pesar&#39;, &#39;segunda&#39;, &#39;quien&#39;, &#39;claro&#39;, &#39;hizo&#39;, &#39;aquel&#39;, &#39;quién&#39;, &#39;tenido&#39;, &#39;segundo&#39;, &#39;vamos&#39;, &#39;aún&#39;, &#39;temprano&#39;, &#39;tal&#39;, &#39;tras&#39;, &#39;junto&#39;, &#39;pueden&#39;, &#39;fuera&#39;, &#39;primero&#39;, &#39;manifestó&#39;, &#39;haya&#39;, &#39;hecho&#39;, &#39;mas&#39;, &#39;trabajo&#39;, &#39;nuestro&#39;, &#39;tu&#39;, &#39;ambos&#39;, &#39;algo&#39;, &#39;desde&#39;, &#39;estos&#39;, &#39;dar&#39;, &#39;si&#39;, &#39;algunos&#39;, &#39;trabajar&#39;, &#39;todas&#39;, &#39;solos&#39;, &#39;voy&#39;, &#39;sé&#39;, &#39;puede&#39;, &#39;sino&#39;, &#39;tuvo&#39;, &#39;breve&#39;, &#39;estaban&#39;, &#39;eso&#39;, &#39;parece&#39;, &#39;alguno&#39;, &#39;ser&#39;, &#39;apenas&#39;, &#39;ésta&#39;, &#39;bastante&#39;, &#39;estará&#39;, &#39;pronto&#39;, &#39;primer&#39;, &#39;puedo&#39;, &#39;este&#39;, &#39;mediante&#39;, &#39;encima&#39;, &#39;antes&#39;, &#39;mí&#39;, &#39;propio&#39;, &#39;ante&#39;, &#39;dijo&#39;, &#39;quiere&#39;, &#39;nueva&#39;, &#39;ahí&#39;, &#39;cuántos&#39;, &#39;lo&#39;, &#39;pudo&#39;, &#39;tiene&#39;, &#39;las&#39;, &#39;posible&#39;, &#39;para&#39;, &#39;tan&#39;, &#39;muy&#39;, &#39;bajo&#39;, &#39;ha&#39;, &#39;valor&#39;, &#39;hacia&#39;, &#39;encuentra&#39;, &#39;ningunos&#39;, &#39;aquellos&#39;, &#39;os&#39;, &#39;dos&#39;, &#39;cosas&#39;, &#39;sabemos&#39;, &#39;casi&#39;, &#39;hubo&#39;, &#39;conocer&#39;, &#39;mucho&#39;, &#39;tiempo&#39;, &#39;fueron&#39;, &#39;cuál&#39;, &#39;entre&#39;, &#39;míos&#39;, &#39;adelante&#39;, &#39;le&#39;, &#39;esas&#39;, &#39;sus&#39;, &#39;todos&#39;, &#39;demasiado&#39;, &#39;suya&#39;, &#39;existen&#39;, &#39;menudo&#39;, &#39;modo&#39;, &#39;suyas&#39;, &#39;ellas&#39;, &#39;es&#39;, &#39;añadió&#39;, &#39;ellos&#39;, &#39;varias&#39;, &#39;tener&#39;, &#39;ella&#39;, &#39;trabajan&#39;, &#39;buenas&#39;, &#39;cuanto&#39;, &#39;sabe&#39;, &#39;menos&#39;, &#39;vuestro&#39;, &#39;después&#39;, &#39;nuestras&#39;, &#39;nada&#39;, &#39;yo&#39;, &#39;cierto&#39;, &#39;habla&#39;, &#39;largo&#39;, &#39;somos&#39;, &#39;vais&#39;, &#39;dio&#39;, &#39;alrededor&#39;, &#39;ciertos&#39;, &#39;la&#39;, &#39;momento&#39;, &#39;siempre&#39;, &#39;pueda&#39;, &#39;podemos&#39;, &#39;solo&#39;, &#39;propia&#39;, &#39;ayer&#39;, &#39;existe&#39;, &#39;sobre&#39;, &#39;general&#39;, &#39;toda&#39;, &#39;vuestros&#39;, &#39;tus&#39;, &#39;nosotros&#39;, &#39;todavía&#39;, &#39;esa&#39;, &#39;grandes&#39;, &#39;ver&#39;, &#39;mayor&#39;, &#39;uno&#39;, &#39;eran&#39;, &#39;éste&#39;, &#39;día&#39;, &#39;sois&#39;, &#39;misma&#39;, &#39;incluso&#39;, &#39;mi&#39;, &#39;tengo&#39;, &#39;era&#39;, &#39;ir&#39;, &#39;de&#39;, &#39;mal&#39;, &#39;verdadera&#39;, &#39;otros&#39;, &#39;últimas&#39;, &#39;suyo&#39;, &#39;último&#39;, &#39;vez&#39;, &#39;quizá&#39;, &#39;un&#39;, &#39;igual&#39;, &#39;aquella&#39;, &#39;otra&#39;, &#39;cuantas&#39;, &#39;sola&#39;, &#39;poca&#39;, &#39;habrá&#39;, &#39;estaba&#39;, &#39;donde&#39;, &#39;nuevo&#39;, &#39;todo&#39;, &#39;ahora&#39;, &#39;esos&#39;, &#39;tarde&#39;, &#39;ni&#39;, &#39;verdadero&#39;, &#39;deben&#39;, &#39;nuevas&#39;, &#39;dejó&#39;, &#39;cuales&#39;, &#39;cuatro&#39;, &#39;su&#39;, &#39;algunas&#39;, &#39;fui&#39;, &#39;por&#39;, &#39;además&#39;, &#39;más&#39;, &#39;ustedes&#39;, &#39;debajo&#39;, &#39;dentro&#39;, &#39;tenemos&#39;, &#39;siendo&#39;, &#39;nadie&#39;, &#39;excepto&#39;, &#39;aunque&#39;, &#39;aun&#39;, &#39;aquélla&#39;, &#39;será&#39;, &#39;primera&#39;, &#39;dice&#39;, &#39;realizar&#39;, &#39;verdad&#39;, &#39;hacemos&#39;, &#39;mía&#39;, &#39;con&#39;, &#39;había&#39;, &#39;aquél&#39;, &#39;podría&#39;, &#39;vuestras&#39;, &#39;sin&#39;, &#39;dan&#39;, &#39;esta&#39;, &#39;respecto&#39;, &#39;ti&#39;, &#39;hoy&#39;, &#39;días&#39;, &#39;estoy&#39;, &#39;pocas&#39;, &#39;ello&#39;, &#39;dijeron&#39;, &#39;estar&#39;, &#39;haber&#39;, &#39;estuvo&#39;, &#39;través&#39;, &#39;sigue&#39;, &#39;me&#39;, &#39;acuerdo&#39;, &#39;otro&#39;, &#39;unos&#39;, &#39;decir&#39;, &#39;tenga&#39;, &#39;medio&#39;, &#39;indicó&#39;, &#39;realizado&#39;, &#39;muchas&#39;, &#39;hasta&#39;, &#39;pasada&#39;, &#39;hicieron&#39;, &#39;han&#39;, &#39;mío&#39;, &#39;quedó&#39;, &#39;sea&#39;, &#39;soy&#39;, &#39;podrá&#39;, &#39;también&#39;, &#39;mismas&#39;, &#39;qué&#39;, &#39;pasado&#39;, &#39;sean&#39;, &#39;contra&#39;, &#39;fue&#39;, &#39;cualquier&#39;, &#39;uso&#39;, &#39;ningún&#39;, &#39;estas&#39;, &#39;tienen&#39;, &#39;hacer&#39;, &#39;arriba&#39;, &#39;veces&#39;, &#39;solamente&#39;, &#39;ciertas&#39;, &#39;son&#39;, &#39;pocos&#39;, &#39;ninguna&#39;, &#39;alguna&#39;, &#39;explicó&#39;, &#39;solas&#39;, &#39;conmigo&#39;, &#39;luego&#39;, &#39;dónde&#39;, &#39;sí&#39;, &#39;hace&#39;, &#39;quiénes&#39;, &#39;nosotras&#39;, &#39;nuestra&#39;, &#39;dado&#39;, &#39;del&#39;, &#39;dicen&#39;, &#39;tampoco&#39;, &#39;va&#39;, &#39;cuánto&#39;, &#39;propias&#39;, &#39;diferente&#39;, &#39;hacerlo&#39;, &#39;está&#39;, &#39;saben&#39;, &#39;cuenta&#39;, &#39;señaló&#39;, &#39;trata&#39;, &#39;demás&#39;, &#39;gran&#39;, &#39;nos&#39;, &#39;final&#39;, &#39;una&#39;, &#39;hay&#39;, &#39;tenía&#39;, &#39;durante&#39;, &#39;porque&#39;, &#39;llegó&#39;, &#39;él&#39;, &#39;sólo&#39;, &#39;última&#39;, &#39;algún&#39;, &#39;expresó&#39;, &#39;podrían&#39;, &#39;da&#39;, &#39;manera&#39;, &#39;bueno&#39;, &#39;ese&#39;, &#39;cuantos&#39;, &#39;buen&#39;, &#39;entonces&#39;, &#39;en&#39;, &#39;lugar&#39;, &#39;ésa&#39;, &#39;al&#39;, &#39;lejos&#39;, &#39;muchos&#39;, &#39;esto&#39;, &#39;peor&#39;, &#39;tres&#39;, &#39;hemos&#39;, &#39;raras&#39;, &#39;próximos&#39;, &#39;realizó&#39;, &#39;tendrá&#39;, &#39;unas&#39;, &#39;mucha&#39;, &#39;cada&#39;, &#39;estado&#39;, &#39;debe&#39;, &#39;cómo&#39;, &#39;fin&#39;, &#39;según&#39;, &#39;poco&#39;, &#39;vosotros&#39;, &#39;poder&#39;, &#39;otras&#39;, &#39;próximo&#39;, &#39;nunca&#39;, &#39;poner&#39;, &#39;parte&#39;, &#39;mis&#39;, &#39;mismo&#39;, &#39;cuando&#39;, &#39;saber&#39;, &#39;bien&#39;, &#39;cerca&#39;, &#39;pues&#39;, &#39;sería&#39;, &#39;tercera&#39;, &#39;como&#39;, &#39;se&#39;, &#39;cierta&#39;, &#39;no&#39;, &#39;vuestra&#39;, &#39;tuyos&#39;, &#39;partir&#39;, &#39;consigo&#39;, &#39;están&#39;, &#39;pero&#39;, &#39;anterior&#39;, &#39;cual&#39;, &#39;buenos&#39;, &#39;lado&#39;, &#39;delante&#39;, &#39;dieron&#39;, &#39;éstos&#39;, &#39;aquí&#39;, &#39;seis&#39;, &#39;usar&#39;, &#39;ejemplo&#39;, &#39;haciendo&#39;, &#39;allí&#39;, &#39;les&#39;, &#39;mismos&#39;, &#39;el&#39;, &#39;quienes&#39;, &#39;debido&#39;]
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[&#39;project&#39;,
+  &#39;gutenberg&#39;,
+  &#39;adventures&#39;,
+  &#39;sherlock&#39;,
+  &#39;holmes&#39;,
+  &#39;arthur&#39;,
+  &#39;conan&#39;,
+  &#39;doyle&#39;],
+ [&#39;ebook&#39;, &#39;use&#39;, &#39;cost&#39;],
+ [&#39;restrictions&#39;, &#39;whatsoever&#39;],
+ [&#39;copy&#39;, &#39;away&#39;],
+ [&#39;use&#39;, &#39;terms&#39;, &#39;project&#39;, &#39;gutenberg&#39;, &#39;license&#39;, &#39;included&#39;],
+ [&#39;ebook&#39;, &#39;online&#39;, &#39;www&#39;],
+ [&#39;gutenberg&#39;],
+ [&#39;net&#39;],
+ [&#39;title&#39;, &#39;adventures&#39;, &#39;sherlock&#39;, &#39;holmes&#39;],
+ [&#39;author&#39;, &#39;arthur&#39;, &#39;conan&#39;, &#39;doyle&#39;]]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Step-3---Create-a-Word2Vec-model">Step 3 - Create a Word2Vec model<a class="anchor-link" href="#Step-3---Create-a-Word2Vec-model">&#182;</a></h3>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Returns a text with data quality</span>
-<span class="k">def</span> <span class="nf">text_quality</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="n">new_text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">new_text</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="c1"># Print out named first 50 entities</span>
-<span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
-    <span class="n">ent</span> <span class="o">=</span> <span class="n">doc_es</span><span class="o">.</span><span class="n">ents</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
-    <span class="n">ent_text</span> <span class="o">=</span> <span class="n">text_quality</span><span class="p">(</span><span class="n">ent</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ent_text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">((</span><span class="n">ix</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;- Entity:&#39;</span><span class="p">,</span> <span class="n">ent_text</span><span class="p">,</span> <span class="s1">&#39;, Label:&#39;</span><span class="p">,</span> <span class="n">ent</span><span class="o">.</span><span class="n">label_</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create Word2Vec model</span>
+<span class="n">word2vec</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">all_words</span><span class="p">,</span> <span class="n">min_count</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1 - Entity: The Cricket of the Heard , Label: MISC
-2 - Entity: Charles DickensEste , Label: PER
-3 - Entity: Capítulo ICapítulo IICapítulo IIICapítulo IV , Label: PER
-4 - Entity: Primer grito , Label: MISC
-6 - Entity: No necesito que me contéis , Label: MISC
-7 - Entity: Peerybingle dijera , Label: MISC
-8 - Entity: Dejad , Label: MISC
-9 - Entity: Peerybingle , Label: MISC
-10 - Entity: Tengo , Label: MISC
-11 - Entity: El puchero empezó , Label: MISC
-13 - Entity: Por nada del mundo opondría mi opinión , Label: MISC
-14 - Entity: Peerybingle , Label: MISC
-15 - Entity: Pero se trata de una cuestión de hecho , Label: MISC
-16 - Entity: Si insistís , Label: MISC
-17 - Entity: ¿cómo , Label: MISC
-18 - Entity: Una lucha musical , Label: MISC
-19 - Entity: Vais , Label: LOC
-20 - Entity: Euclides , Label: PER
-21 - Entity: La señora Peerybingle , Label: MISC
-22 - Entity: De vuelta ya , Label: MISC
-23 - Entity: Peerybingle , Label: MISC
-24 - Entity: Entonces perdió su sangre fría , Label: MISC
-25 - Entity: Peerybingle , Label: MISC
-26 - Entity: No quería dejarse acomodar sobre la barra superior de la rejilla , Label: MISC
-27 - Entity: Hay más: la tapadera , Label: MISC
-28 - Entity: Peerybingle , Label: MISC
-29 - Entity: El cascarón del Royal , Label: MISC
-30 - Entity: George , Label: PER
-31 - Entity: Peerybingle , Label: MISC
-32 - Entity: Peerybingle , Label: MISC
-33 - Entity: Nadie me forzará a hervir» , Label: MISC
-34 - Entity: Peerybingle , Label: MISC
-35 - Entity: No obstante , Label: MISC
-36 - Entity: Pero hay que notar , Label: MISC
-37 - Entity: Cuando el cuclillo , Label: MISC
-38 - Entity: En efecto , Label: MISC
-39 - Entity: En aquel momento el puchero , Label: MISC
-40 - Entity: En aquel momento , Label: MISC
-42 - Entity: Habríais , Label: PER
-43 - Entity: La señora Peerybingle , Label: MISC
-45 - Entity: No es más , Label: MISC
-46 - Entity: El vasto llano , Label: MISC
-47 - Entity: El poste indicador está cubierto de escarcha , Label: MISC
-48 - Entity: La lluvia , Label: MISC
-50 - Entity: Perseveró , Label: ORG
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-3---Working-with-POS,-NES-and-sentences">Step 3 - Working with POS, NES and sentences<a class="anchor-link" href="#Step-3---Working-with-POS,-NES-and-sentences">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>POS:</strong> the parts of speech explain how a word is used in a sentence.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Part of speech (POS) used in this document</span>
-<span class="nb">set</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">pos_</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc_es</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show vocabulary size</span>
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span>  
+<span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13548,23 +13560,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;ADJ&#39;,
- &#39;ADP&#39;,
- &#39;ADV&#39;,
- &#39;AUX&#39;,
- &#39;CONJ&#39;,
- &#39;DET&#39;,
- &#39;INTJ&#39;,
- &#39;NOUN&#39;,
- &#39;NUM&#39;,
- &#39;PART&#39;,
- &#39;PRON&#39;,
- &#39;PROPN&#39;,
- &#39;PUNCT&#39;,
- &#39;SCONJ&#39;,
- &#39;SPACE&#39;,
- &#39;SYM&#39;,
- &#39;VERB&#39;}</pre>
+<pre>4072</pre>
 </div>
 
 </div>
@@ -13572,23 +13568,14 @@ div#notebook {
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Sentences:</strong> a set of words that is complete in itself and typically containing a subject and predicate.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># How many sentences are in this text?</span>
-<span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">doc_es</span><span class="o">.</span><span class="n">sents</span><span class="p">]</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show &#39;project&#39; vector</span>
+<span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s1">&#39;project&#39;</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13607,7 +13594,27 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>1621</pre>
+<pre>array([ 0.00571524,  0.0037815 , -0.0029851 , -0.00234666, -0.00384644,
+        0.0026138 ,  0.00376731, -0.00350076, -0.00345531, -0.00123497,
+       -0.00392786, -0.00487326,  0.002396  ,  0.00065813, -0.00089581,
+        0.00288083,  0.003073  , -0.00023033,  0.00064188,  0.00469708,
+        0.00057567, -0.00287395,  0.00170696, -0.00220402, -0.00369562,
+        0.00048359, -0.00554605,  0.00117496,  0.00097162,  0.00056364,
+       -0.00300056,  0.00420297,  0.00553688,  0.00070874, -0.0008803 ,
+       -0.00219831,  0.00295734,  0.00202147, -0.00204766,  0.00069915,
+        0.00155343, -0.00173383,  0.00101644,  0.0037438 , -0.00295153,
+       -0.0027267 , -0.00293964, -0.00352298, -0.00384365,  0.00290935,
+       -0.00594365, -0.00033689, -0.00500323, -0.0002361 , -0.00169291,
+        0.00290482, -0.0013868 ,  0.00172921,  0.00102748, -0.00260645,
+        0.00270165, -0.002158  ,  0.00060265,  0.00046697, -0.00544463,
+       -0.00219709, -0.00153067, -0.00328287, -0.00191149, -0.00256149,
+        0.00487508, -0.00325485,  0.00222084, -0.00238673,  0.0008818 ,
+       -0.00223221,  0.00135853,  0.00236858, -0.00180198, -0.0013227 ,
+        0.00433142, -0.0015103 ,  0.00303107, -0.00276974,  0.00098357,
+        0.00057665,  0.00166037, -0.00394594, -0.00010403,  0.00187582,
+       -0.00525217, -0.00191993,  0.00092555,  0.00087304,  0.00067075,
+       -0.00120125,  0.00246809, -0.00013627, -0.00433768,  0.00246021],
+      dtype=float32)</pre>
 </div>
 
 </div>
@@ -13615,478 +13622,6 @@ div#notebook {
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show first 10 sentences</span>
-<span class="n">sentences</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[14]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[No necesito que me contéis lo que la señora Peerybingle dijera; yo me entiendo.,
- Dejad que la señora Peerybingle se pase hasta la consumación de los siglos asegurando la imposibilidad de decidir cuál empezó: yo digo que fue el puchero.,
- Tengo motivos para saberlo.,
- El puchero empezó cinco minutos antes que el grillo, según el relojito holandés de cuadrante barnizado situado en el rincón.,
- ¡Como si el reloj no hubiese cesado de tocar! ¡Como si el segadorcido de movimientos convulsivos y bruscos que lo remata, paseando la hoz de derecha a izquierda y luego de izquierda a derecha ante la fachada de su palacio morisco, no hubiese segado medio acre de césped imaginario antes que el grillo hubiese hecho notar su presencia!,
- A decir verdad, no fui nunca terco, como todo el mundo sabe.,
- Por nada del mundo opondría mi opinión personal a la opinión de la señora Peerybingle, si no estuviese perfectamente seguro de lo ocurrido.,
- «Nada me induciría a semejante cosa.,
- Pero se trata de una cuestión de hecho, y el hecho es que el puchero empezó por lo menos cinco minutos antes que el grillo hubiese dado señal de vida.,
- Si insistís, apostaré que transcurrieron diez minutos.]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the sentences in which the &#39;grillo&#39; appears</span>
-<span class="n">cricket_sent</span> <span class="o">=</span> <span class="p">[</span><span class="n">sent</span> <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">doc_es</span><span class="o">.</span><span class="n">sents</span> <span class="k">if</span> <span class="s1">&#39;grillo&#39;</span> <span class="ow">in</span> <span class="n">sent</span><span class="o">.</span><span class="n">string</span><span class="p">]</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">cricket_sent</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[15]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>48</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show the first 10 sentences in which the &#39;grillo&#39; appears</span>
-<span class="n">cricket_sent</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[16]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[El puchero empezó cinco minutos antes que el grillo, según el relojito holandés de cuadrante barnizado situado en el rincón.,
- ¡Como si el reloj no hubiese cesado de tocar! ¡Como si el segadorcido de movimientos convulsivos y bruscos que lo remata, paseando la hoz de derecha a izquierda y luego de izquierda a derecha ante la fachada de su palacio morisco, no hubiese segado medio acre de césped imaginario antes que el grillo hubiese hecho notar su presencia!,
- Pero se trata de una cuestión de hecho, y el hecho es que el puchero empezó por lo menos cinco minutos antes que el grillo hubiese dado señal de vida.,
- Parecía que la vasija y el grillo luchaban.,
- La lluvia congelada hace resbaladizo el camino; más abajo el agua no se ha convertido del todo en hielo, pero ya no es libre; nada conserva su forma natural; pero ¡él viene, él viene, él viene!
- Aquí, precisamente en este punto, fue cuando el grillo entró en escena con un crrri, crrri, crrri, de magnífica potencia a coro con el puchero; pero con una voz tan asombradamente desproporcionada a su estatura -¡su estatura!, era casi invisible-, sobre todo comparándole con el puchero, que si por desgracia hubiese reventado como un cañón excesivamente cargado, cayendo, víctima de su celo, su cuerpecito roto en mil fragmentos, no hubiera parecido sino la consecuencia natural y perseguida con su trabajo afanoso.,
- Perseveró con ardor constante; pero el grillo se erigió en concertino y se mantuvo en su supremacía.,
- No obstante, marchaban muy bien unidos el grillo y el puchero.,
- Cuando volvió a sentarse en su sitio, el grillo y el puchero se esmeraban todavía en el canto con cierta rivalidad furiosa, siendo indudablemente el lado flaco del puchero la presunción de vencer constantemente.,
- El grillo logra una milla de delantera.,
- ¡Crrri, crrri, crrri!..., el grillo dobla la esquina.]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>NER:</strong> Named Entity Recognition.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Returns the most common entities and their quantity</span>
-<span class="k">def</span> <span class="nf">find_entities</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">ent_type</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="n">entities</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
-    
-    <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ent</span><span class="o">.</span><span class="n">label_</span> <span class="o">==</span> <span class="n">ent_type</span><span class="p">:</span>
-            <span class="n">ent_name</span> <span class="o">=</span> <span class="n">text_quality</span><span class="p">(</span><span class="n">ent</span><span class="o">.</span><span class="n">lemma_</span><span class="p">)</span>
-            <span class="n">entities</span><span class="p">[</span><span class="n">ent_name</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    
-    <span class="k">return</span> <span class="n">entities</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show entities of type PERSON</span>
-<span class="n">find_entities</span><span class="p">(</span><span class="n">doc_es</span><span class="p">,</span> <span class="s1">&#39;PER&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[18]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[(&#39;John&#39;, 132),
- (&#39;Dot&#39;, 82),
- (&#39;May&#39;, 38),
- (&#39;Tackleton&#39;, 38),
- (&#39;Berta&#39;, 32),
- (&#39;John Peerybingle&#39;, 16),
- (&#39;Tilly&#39;, 14),
- (&#39;Fielding&#39;, 10),
- (&#39;Boxer&#39;, 8),
- (&#39;Dots&#39;, 8),
- (&#39;John !&#39;, 7),
- (&#39;Caleb Plummer&#39;, 7),
- (&#39;Eduardo&#39;, 7),
- (&#39;Dios&#39;, 5),
- (&#39;¿&#39;, 5),
- (&#39;Gruff&#39;, 5),
- (&#39;Dot-&#39;, 5),
- (&#39;Pero&#39;, 4),
- (&#39;Nada&#39;, 4),
- (&#39;May Fielding&#39;, 4)]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Returns persons adjectives</span>
-<span class="k">def</span> <span class="nf">get_person_adj</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">person</span><span class="p">):</span>
-    <span class="n">adjectives</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ent</span><span class="o">.</span><span class="n">lemma_</span> <span class="o">==</span> <span class="n">person</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">ent</span><span class="o">.</span><span class="n">subtree</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span> <span class="o">==</span> <span class="s1">&#39;ADJ&#39;</span><span class="p">:</span> <span class="c1"># Adjective</span>
-                    <span class="n">adjectives</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">lemma_</span><span class="p">)</span>
-    
-    <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ent</span><span class="o">.</span><span class="n">lemma_</span> <span class="o">==</span> <span class="n">person</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">ent</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">dep_</span> <span class="o">==</span> <span class="s1">&#39;nsubj&#39;</span><span class="p">:</span> <span class="c1"># Nominal subject</span>
-                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">ent</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">dep_</span> <span class="o">==</span> <span class="s1">&#39;acomp&#39;</span><span class="p">:</span> <span class="c1"># Adjectival complement</span>
-                        <span class="n">adjectives</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">lemma_</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">adjectives</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show the adjectives used for John (most common entity)</span>
-<span class="n">curr_person</span> <span class="o">=</span> <span class="s1">&#39;John&#39;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">get_person_adj</span><span class="p">(</span><span class="n">doc_es</span><span class="p">,</span> <span class="n">curr_person</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;lento&#39;, &#39;pobre&#39;, &#39;atentar&#39;, &#39;llenar&#39;, &#39;-Querido&#39;, &#39;afectuoso&#39;, &#39;macizar&#39;, &#39;venturoso&#39;, &#39;amar&#39;, &#39;suplicar&#39;, &#39;cabizbajo&#39;, &#39;alto&#39;, &#39;turbada-&#39;, &#39;honrar&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Returns the people who use a certain verb</span>
-<span class="k">def</span> <span class="nf">verb_persons</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">verb</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="n">verb_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
-    
-    <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ent</span><span class="o">.</span><span class="n">label_</span> <span class="o">==</span> <span class="s1">&#39;PER&#39;</span> <span class="ow">and</span> <span class="n">ent</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">lemma_</span> <span class="o">==</span> <span class="n">verb</span><span class="p">:</span>
-            <span class="n">verb_count</span><span class="p">[</span><span class="n">ent</span><span class="o">.</span><span class="n">text</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    
-    <span class="k">return</span> <span class="n">verb_count</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show the people who use a certain verb</span>
-<span class="n">curr_verb</span> <span class="o">=</span> <span class="s1">&#39;hacer&#39;</span>
-<span class="n">verb_persons</span><span class="p">(</span><span class="n">doc_es</span><span class="p">,</span> <span class="n">curr_verb</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[22]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[(&#39;Dot&#39;, 2),
- (&#39;Tackleton&#39;, 2),
- (&#39;John&#39;, 1),
- (&#39;Mal&#39;, 1),
- (&#39;May&#39;, 1),
- (&#39;Dios&#39;, 1),
- (&#39;Nada&#39;, 1)]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get ADJ type labels</span>
-<span class="n">adj_tokens</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">orth_</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc_es</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span> <span class="o">==</span> <span class="s1">&#39;ADJ&#39;</span><span class="p">))</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">adj_tokens</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[23]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>1390</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show ADJ type labels</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">adj_tokens</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;singular&#39;, &#39;privado&#39;, &#39;imaginables&#39;, &#39;único&#39;, &#39;suave&#39;, &#39;frescas&#39;, &#39;inclinado&#39;, &#39;absoluta&#39;, &#39;ensimismado&#39;, &#39;santa&#39;, &#39;horas-&#39;, &#39;paterna&#39;, &#39;sólidamente&#39;, &#39;pronunciada&#39;, &#39;mejor&#39;, &#39;grato&#39;, &#39;dándome&#39;, &#39;holandeses&#39;, &#39;imparcialmente&#39;, &#39;siguiente&#39;, &#39;benévolo&#39;, &#39;espantosos&#39;, &#39;brutal&#39;, &#39;redonda&#39;, &#39;instintivamente&#39;, &#39;apreciable&#39;, &#39;cruzadas&#39;, &#39;enteramente&#39;, &#39;extranjero&#39;, &#39;loca&#39;, &#39;primero&#39;, &#39;indudable&#39;, &#39;soñador&#39;, &#39;dispuesto&#39;, &#39;rebosantes&#39;, &#39;hecho&#39;, &#39;fatuo&#39;, &#39;ladridos&#39;, &#39;rabiosos&#39;, &#39;desdeñado&#39;, &#39;dichos&#39;, &#39;estrujado&#39;, &#39;deliciosas&#39;, &#39;sentada&#39;, &#39;agitados&#39;, &#39;circulares&#39;, &#39;sordo&#39;, &#39;amarga&#39;, &#39;animado&#39;, &#39;acostumbrado&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get PROPN type labels</span>
-<span class="n">propn_tokens</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">orth_</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc_es</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span> <span class="o">==</span> <span class="s1">&#39;PROPN&#39;</span><span class="p">))</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">adj_tokens</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[25]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>1390</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show PROPN type labels</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">propn_tokens</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;slowboys&#39;, &#39;crusoe&#39;, &#39;royal&#39;, &#39;vendréis&#39;, &#39;naturaleza&#39;, &#39;estáis&#39;, &#39;acercaos&#39;, &#39;-siguió&#39;, &#39;suyo-&#39;, &#39;oídme&#39;, &#39;acercarse&#39;, &#39;hadas-&#39;, &#39;euclides&#39;, &#39;heard&#39;, &#39;danza&#39;, &#39;-si&#39;, &#39;-oídme&#39;, &#39;dickens&#39;, &#39;éste-&#39;, &#39;adoraba-&#39;, &#39;rodeó&#39;, &#39;os&#39;, &#39;letra-&#39;, &#39;habíase&#39;, &#39;-se&#39;, &#39;mecía&#39;, &#39;miss&#39;, &#39;vámonos&#39;, &#39;tackletons&#39;, &#39;caleb&#39;, &#39;sang&#39;, &#39;charles&#39;, &#39;tiempo&#39;, &#39;cruel&#39;, &#39;parlamento&#39;, &#39;berta&#39;, &#39;madre&#39;, &#39;abrazarse&#39;, &#39;crrri&#39;, &#39;mirad&#39;, &#39;entrad&#39;, &#39;fuego!-&#39;, &#39;-o&#39;, &#39;hija&#39;, &#39;hércules-&#39;, &#39;solitos&#39;, &#39;hela&#39;, &#39;the&#39;, &#39;peerybingle-&#39;, &#39;riendo-&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><hr></p>
-<p><a href="https://github.com/ansegura7/NLP/">« Home</a></p>
-</div>
-</div>
 </div>
     </div>
   </div>
