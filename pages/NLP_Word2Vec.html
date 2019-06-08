@@ -13139,6 +13139,13 @@ div#notebook {
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Example-with-a-document-in-English">Example with a document in English<a class="anchor-link" href="#Example-with-a-document-in-English">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
@@ -13147,6 +13154,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load Python libraries</span>
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">DataFrame</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -13646,7 +13654,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;another&#39;, &#39;done&#39;, &#39;his&#39;, &#39;say&#39;, &#39;many&#39;, &#39;sometimes&#39;, &#39;across&#39;, &#39;unless&#39;, &#39;up&#39;, &#39;this&#39;, &#39;beside&#39;, &#39;below&#39;, &#39;may&#39;, &#39;above&#39;, &#39;less&#39;, &#39;make&#39;, &#39;somehow&#39;, &#39;there&#39;, &#39;who&#39;, &#39;n’t&#39;, &#39;thereupon&#39;, &#39;me&#39;, &#39;two&#39;, &#39;via&#39;, &#39;amount&#39;, &#39;give&#39;, &#39;my&#39;, &#39;hence&#39;, &#39;other&#39;, &#39;she&#39;, &#39;ten&#39;, &#39;thereby&#39;, &#39;yet&#39;, &#34;&#39;s&#34;, &#34;&#39;m&#34;, &#39;anything&#39;, &#39;back&#39;, &#39;forty&#39;, &#39;whose&#39;, &#39;sometime&#39;, &#39;re&#39;, &#39;is&#39;, &#39;had&#39;, &#39;’ve&#39;, &#39;whenever&#39;, &#39;could&#39;, &#39;thereafter&#39;, &#39;therefore&#39;, &#39;’s&#39;, &#39;anywhere&#39;, &#39;but&#39;, &#39;the&#39;, &#39;perhaps&#39;, &#39;under&#39;, &#39;such&#39;, &#39;mostly&#39;, &#39;anyone&#39;, &#39;afterwards&#39;, &#39;it&#39;, &#39;nobody&#39;, &#39;since&#39;, &#39;without&#39;, &#39;everywhere&#39;, &#39;last&#39;, &#39;therein&#39;, &#39;down&#39;, &#39;if&#39;, &#39;keep&#39;, &#39;move&#39;, &#39;although&#39;, &#39;just&#39;, &#39;a&#39;, &#39;nor&#39;, &#39;seeming&#39;, &#39;wherein&#39;, &#39;out&#39;, &#39;twenty&#39;, &#39;all&#39;, &#39;behind&#39;, &#39;nowhere&#39;, &#39;still&#39;, &#39;itself&#39;, &#39;them&#39;, &#39;everything&#39;, &#39;someone&#39;, &#39;seems&#39;, &#39;same&#39;, &#39;elsewhere&#39;, &#39;somewhere&#39;, &#39;else&#39;, &#39;hereupon&#39;, &#39;seemed&#39;, &#39;no&#39;, &#39;any&#39;, &#39;part&#39;, &#39;more&#39;, &#39;former&#39;, &#39;however&#39;, &#39;never&#39;, &#39;whereafter&#39;, &#39;also&#39;, &#39;‘ve&#39;, &#39;not&#39;, &#39;three&#39;, &#39;either&#39;, &#39;nothing&#39;, &#39;then&#39;, &#39;front&#39;, &#39;against&#39;, &#39;seem&#39;, &#39;becomes&#39;, &#39;himself&#39;, &#39;on&#39;, &#39;though&#39;, &#39;herself&#39;, &#39;why&#39;, &#39;latter&#39;, &#39;see&#39;, &#39;enough&#39;, &#39;your&#39;, &#39;top&#39;, &#39;six&#39;, &#39;indeed&#39;, &#39;quite&#39;, &#34;&#39;d&#34;, &#39;their&#39;, &#39;must&#39;, &#39;whom&#39;, &#39;before&#39;, &#39;whoever&#39;, &#39;’ll&#39;, &#39;get&#39;, &#39;by&#39;, &#39;one&#39;, &#39;onto&#39;, &#39;except&#39;, &#39;which&#39;, &#39;hers&#39;, &#39;what&#39;, &#39;doing&#39;, &#39;yourselves&#39;, &#39;’d&#39;, &#39;own&#39;, &#39;has&#39;, &#39;because&#39;, &#39;have&#39;, &#39;alone&#39;, &#39;from&#39;, &#39;side&#39;, &#39;using&#39;, &#39;first&#39;, &#39;nine&#39;, &#39;often&#39;, &#39;rather&#39;, &#39;show&#39;, &#39;otherwise&#39;, &#39;n‘t&#39;, &#39;’m&#39;, &#39;over&#39;, &#39;serious&#39;, &#39;they&#39;, &#39;might&#39;, &#39;eleven&#39;, &#39;through&#39;, &#39;well&#39;, &#39;‘re&#39;, &#39;while&#39;, &#39;others&#39;, &#39;least&#39;, &#39;or&#39;, &#39;throughout&#39;, &#39;various&#39;, &#39;really&#39;, &#39;that&#39;, &#39;its&#39;, &#39;whereas&#39;, &#39;ever&#39;, &#39;every&#39;, &#39;once&#39;, &#39;along&#39;, &#39;after&#39;, &#39;neither&#39;, &#39;at&#39;, &#39;themselves&#39;, &#39;you&#39;, &#39;always&#39;, &#39;should&#39;, &#39;per&#39;, &#39;some&#39;, &#39;both&#39;, &#39;anyway&#39;, &#39;third&#39;, &#39;very&#39;, &#34;&#39;ve&#34;, &#39;would&#39;, &#39;‘s&#39;, &#39;him&#39;, &#39;take&#39;, &#39;about&#39;, &#39;her&#39;, &#39;each&#39;, &#39;between&#39;, &#39;namely&#39;, &#39;will&#39;, &#39;am&#39;, &#39;be&#39;, &#39;everyone&#39;, &#39;did&#39;, &#39;these&#39;, &#39;until&#39;, &#39;made&#39;, &#39;five&#39;, &#39;moreover&#39;, &#39;within&#39;, &#39;been&#39;, &#39;he&#39;, &#39;go&#39;, &#39;bottom&#39;, &#34;&#39;ll&#34;, &#39;beforehand&#39;, &#39;noone&#39;, &#39;next&#39;, &#39;sixty&#39;, &#39;name&#39;, &#39;anyhow&#39;, &#39;into&#39;, &#39;meanwhile&#39;, &#39;were&#39;, &#39;fifteen&#39;, &#39;almost&#39;, &#39;become&#39;, &#39;thus&#39;, &#39;us&#39;, &#39;several&#39;, &#39;call&#39;, &#39;became&#39;, &#39;can&#39;, &#39;with&#39;, &#34;n&#39;t&#34;, &#39;wherever&#39;, &#39;whereupon&#39;, &#39;four&#39;, &#39;‘d&#39;, &#39;further&#39;, &#39;nevertheless&#39;, &#39;herein&#39;, &#39;than&#39;, &#39;‘ll&#39;, &#39;due&#39;, &#39;those&#39;, &#39;toward&#39;, &#39;eight&#39;, &#39;yourself&#39;, &#39;off&#39;, &#39;yours&#39;, &#39;‘m&#39;, &#39;empty&#39;, &#34;&#39;re&#34;, &#39;used&#39;, &#39;an&#39;, &#39;when&#39;, &#39;twelve&#39;, &#39;something&#39;, &#39;do&#39;, &#39;together&#39;, &#39;hereafter&#39;, &#39;now&#39;, &#39;few&#39;, &#39;hundred&#39;, &#39;ours&#39;, &#39;too&#39;, &#39;myself&#39;, &#39;being&#39;, &#39;whole&#39;, &#39;during&#39;, &#39;how&#39;, &#39;and&#39;, &#39;are&#39;, &#39;latterly&#39;, &#39;beyond&#39;, &#39;amongst&#39;, &#39;put&#39;, &#39;thence&#39;, &#39;to&#39;, &#39;upon&#39;, &#39;regarding&#39;, &#39;already&#39;, &#39;besides&#39;, &#39;around&#39;, &#39;fifty&#39;, &#39;so&#39;, &#39;mine&#39;, &#39;formerly&#39;, &#39;whereby&#39;, &#39;whether&#39;, &#39;whither&#39;, &#39;thru&#39;, &#39;cannot&#39;, &#39;towards&#39;, &#39;becoming&#39;, &#39;again&#39;, &#39;ca&#39;, &#39;much&#39;, &#39;only&#39;, &#39;in&#39;, &#39;ourselves&#39;, &#39;was&#39;, &#39;among&#39;, &#39;i&#39;, &#39;hereby&#39;, &#39;here&#39;, &#39;of&#39;, &#39;our&#39;, &#39;most&#39;, &#39;none&#39;, &#39;full&#39;, &#39;whatever&#39;, &#39;does&#39;, &#39;we&#39;, &#39;please&#39;, &#39;whence&#39;, &#39;for&#39;, &#39;where&#39;, &#39;’re&#39;, &#39;as&#39;, &#39;even&#39;}
+<pre>{&#39;‘ll&#39;, &#39;eleven&#39;, &#39;while&#39;, &#39;bottom&#39;, &#39;cannot&#39;, &#39;himself&#39;, &#39;latter&#39;, &#39;keep&#39;, &#39;moreover&#39;, &#39;three&#39;, &#39;to&#39;, &#39;thereby&#39;, &#39;wherever&#39;, &#39;itself&#39;, &#39;onto&#39;, &#39;whole&#39;, &#39;may&#39;, &#34;&#39;re&#34;, &#39;really&#39;, &#39;becoming&#39;, &#39;elsewhere&#39;, &#39;his&#39;, &#39;sixty&#39;, &#39;mostly&#39;, &#39;so&#39;, &#39;whether&#39;, &#39;which&#39;, &#39;whither&#39;, &#39;fifteen&#39;, &#39;here&#39;, &#39;under&#39;, &#39;used&#39;, &#39;whenever&#39;, &#39;latterly&#39;, &#39;it&#39;, &#39;how&#39;, &#39;than&#39;, &#39;again&#39;, &#39;other&#39;, &#39;her&#39;, &#39;themselves&#39;, &#39;whoever&#39;, &#39;move&#39;, &#39;nevertheless&#39;, &#39;ten&#39;, &#39;everything&#39;, &#39;beforehand&#39;, &#39;on&#39;, &#39;’ll&#39;, &#39;after&#39;, &#39;alone&#39;, &#39;ca&#39;, &#39;meanwhile&#39;, &#39;upon&#39;, &#39;whereas&#39;, &#39;such&#39;, &#39;might&#39;, &#39;above&#39;, &#39;some&#39;, &#39;their&#39;, &#39;empty&#39;, &#39;twenty&#39;, &#39;n’t&#39;, &#39;get&#39;, &#39;yourselves&#39;, &#39;around&#39;, &#39;sometimes&#39;, &#39;behind&#39;, &#39;had&#39;, &#39;go&#39;, &#39;was&#39;, &#39;somehow&#39;, &#39;‘re&#39;, &#39;if&#39;, &#39;rather&#39;, &#34;&#39;s&#34;, &#39;has&#39;, &#39;third&#39;, &#39;hereupon&#39;, &#39;what&#39;, &#39;further&#39;, &#39;ours&#39;, &#39;am&#39;, &#39;however&#39;, &#39;seeming&#39;, &#39;top&#39;, &#39;or&#39;, &#39;herein&#39;, &#39;were&#39;, &#39;why&#39;, &#39;nor&#39;, &#39;made&#39;, &#39;except&#39;, &#39;nobody&#39;, &#39;these&#39;, &#39;anyway&#39;, &#39;still&#39;, &#39;became&#39;, &#39;due&#39;, &#39;much&#39;, &#39;thereupon&#39;, &#39;various&#39;, &#39;at&#39;, &#39;among&#39;, &#39;before&#39;, &#39;doing&#39;, &#39;five&#39;, &#39;must&#39;, &#39;regarding&#39;, &#39;yet&#39;, &#39;are&#39;, &#39;is&#39;, &#39;should&#39;, &#39;whatever&#39;, &#39;beyond&#39;, &#39;per&#39;, &#39;seem&#39;, &#39;‘m&#39;, &#39;part&#39;, &#39;but&#39;, &#39;as&#39;, &#39;everywhere&#39;, &#39;say&#39;, &#39;quite&#39;, &#39;whence&#39;, &#39;will&#39;, &#39;another&#39;, &#39;perhaps&#39;, &#39;otherwise&#39;, &#39;therein&#39;, &#39;please&#39;, &#39;off&#39;, &#39;using&#39;, &#39;where&#39;, &#39;by&#39;, &#39;put&#39;, &#39;there&#39;, &#39;since&#39;, &#39;towards&#39;, &#39;throughout&#39;, &#39;out&#39;, &#39;have&#39;, &#39;n‘t&#39;, &#39;been&#39;, &#39;show&#39;, &#39;down&#39;, &#39;done&#39;, &#39;someone&#39;, &#39;thru&#39;, &#39;unless&#39;, &#39;every&#39;, &#39;mine&#39;, &#39;them&#39;, &#39;whom&#39;, &#39;now&#39;, &#39;over&#39;, &#39;others&#39;, &#39;‘ve&#39;, &#39;beside&#39;, &#39;hers&#39;, &#39;anyhow&#39;, &#39;during&#39;, &#39;both&#39;, &#39;almost&#39;, &#39;hereby&#39;, &#39;then&#39;, &#39;your&#39;, &#39;did&#39;, &#39;along&#39;, &#39;formerly&#39;, &#39;six&#39;, &#39;whereupon&#39;, &#39;they&#39;, &#39;’d&#39;, &#39;afterwards&#39;, &#39;give&#39;, &#39;in&#39;, &#39;being&#39;, &#39;its&#39;, &#39;besides&#39;, &#39;hence&#39;, &#39;because&#39;, &#39;our&#39;, &#39;does&#39;, &#39;ourselves&#39;, &#39;against&#39;, &#39;for&#39;, &#39;noone&#39;, &#39;she&#39;, &#39;this&#39;, &#39;with&#39;, &#39;would&#39;, &#39;re&#39;, &#39;well&#39;, &#39;more&#39;, &#39;yours&#39;, &#39;’re&#39;, &#39;none&#39;, &#39;often&#39;, &#39;thence&#39;, &#39;fifty&#39;, &#39;also&#39;, &#39;’s&#39;, &#39;he&#39;, &#39;when&#39;, &#39;hundred&#39;, &#39;once&#39;, &#39;seemed&#39;, &#39;can&#39;, &#39;become&#39;, &#39;whereafter&#39;, &#39;either&#39;, &#39;call&#39;, &#39;most&#39;, &#39;us&#39;, &#39;becomes&#39;, &#39;many&#39;, &#39;take&#39;, &#39;neither&#39;, &#39;name&#39;, &#39;eight&#39;, &#39;who&#39;, &#39;back&#39;, &#39;herself&#39;, &#39;‘s&#39;, &#39;within&#39;, &#39;less&#39;, &#39;anywhere&#39;, &#39;side&#39;, &#39;into&#39;, &#39;through&#39;, &#39;whereby&#39;, &#39;thereafter&#39;, &#39;from&#39;, &#39;not&#39;, &#39;two&#39;, &#39;make&#39;, &#39;the&#39;, &#39;’m&#39;, &#39;first&#39;, &#39;‘d&#39;, &#39;next&#39;, &#39;between&#39;, &#39;former&#39;, &#39;each&#39;, &#39;no&#39;, &#39;until&#39;, &#39;somewhere&#39;, &#39;seems&#39;, &#39;and&#39;, &#39;that&#39;, &#34;n&#39;t&#34;, &#39;ever&#39;, &#39;though&#39;, &#39;else&#39;, &#39;enough&#39;, &#39;below&#39;, &#39;one&#39;, &#39;just&#39;, &#39;of&#39;, &#39;everyone&#39;, &#39;therefore&#39;, &#39;whose&#39;, &#34;&#39;d&#34;, &#39;anyone&#39;, &#39;four&#39;, &#39;very&#39;, &#39;all&#39;, &#39;full&#39;, &#39;thus&#39;, &#39;namely&#39;, &#39;via&#39;, &#39;see&#39;, &#39;could&#39;, &#34;&#39;ve&#34;, &#39;yourself&#39;, &#39;only&#39;, &#39;amongst&#39;, &#39;we&#39;, &#39;my&#39;, &#39;me&#39;, &#39;those&#39;, &#39;toward&#39;, &#34;&#39;m&#34;, &#34;&#39;ll&#34;, &#39;without&#39;, &#39;own&#39;, &#39;already&#39;, &#39;never&#39;, &#39;anything&#39;, &#39;least&#39;, &#39;together&#39;, &#39;nowhere&#39;, &#39;across&#39;, &#39;even&#39;, &#39;something&#39;, &#39;several&#39;, &#39;front&#39;, &#39;up&#39;, &#39;although&#39;, &#39;same&#39;, &#39;few&#39;, &#39;hereafter&#39;, &#39;forty&#39;, &#39;an&#39;, &#39;him&#39;, &#39;i&#39;, &#39;serious&#39;, &#39;do&#39;, &#39;sometime&#39;, &#39;you&#39;, &#39;too&#39;, &#39;’ve&#39;, &#39;indeed&#39;, &#39;last&#39;, &#39;always&#39;, &#39;nothing&#39;, &#39;twelve&#39;, &#39;amount&#39;, &#39;a&#39;, &#39;myself&#39;, &#39;wherein&#39;, &#39;be&#39;, &#39;nine&#39;, &#39;about&#39;, &#39;any&#39;}
 </pre>
 </div>
 </div>
@@ -13871,7 +13879,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create Word2Vec model</span>
-<span class="n">word2vec</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">all_words</span><span class="p">,</span> <span class="n">min_count</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">w2v_model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">all_words</span><span class="p">,</span> <span class="n">min_count</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13893,7 +13901,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show vocabulary size: unique words occurring at least twice</span>
-<span class="n">vocabulary</span> <span class="o">=</span> <span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span>  
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="n">w2v_model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span>  
 <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
 </pre></div>
 
@@ -13928,7 +13936,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show &#39;project&#39; vector</span>
-<span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s1">&#39;project&#39;</span><span class="p">]</span>
+<span class="n">w2v_model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s1">&#39;project&#39;</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13947,31 +13955,31 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([-4.1242377e-03, -4.8785098e-03, -1.5371203e-03,  7.8736461e-04,
-       -5.2691959e-03, -2.1428671e-03, -1.1461255e-03, -4.4575250e-03,
-        4.1640261e-03,  1.8314732e-03, -4.4989684e-03,  4.0191375e-03,
-       -1.6716128e-03,  1.9166416e-03, -3.0781582e-04,  1.3745253e-03,
-        5.3709382e-03,  3.9130566e-03,  5.1774055e-04,  4.2805211e-03,
-        5.2312030e-03, -4.6914392e-03,  2.4642334e-03,  3.7487336e-03,
-        4.9815807e-03,  3.4271481e-03,  3.4816687e-03,  4.8801438e-03,
-       -2.4385648e-04,  1.1956525e-03,  1.5167182e-04,  3.3736450e-03,
-       -2.0818915e-03, -1.9271194e-03, -2.3130763e-04,  1.9897600e-03,
-       -5.0131802e-04, -3.6548004e-03,  4.8042405e-03,  5.5707749e-03,
-       -1.0397201e-03, -4.9172160e-03,  3.1003952e-03, -1.4317000e-03,
-        4.5858009e-04,  5.4594997e-04, -3.7557471e-03,  3.1489877e-03,
-       -2.5877627e-04, -1.8915613e-03,  4.3612220e-03, -4.7539212e-03,
-        2.7839013e-03, -5.2043824e-03, -3.6814755e-03, -3.1785730e-03,
-       -3.2863205e-03,  5.3604692e-04,  2.2773172e-03,  2.0409187e-03,
-        1.2935755e-03,  1.5845458e-03, -4.7150445e-03,  1.2324932e-03,
-        1.6395095e-03,  4.9838526e-03,  1.2908954e-03, -5.1283906e-03,
-       -1.0361683e-03, -3.9575333e-03, -6.5360515e-04,  4.0252409e-03,
-        1.3660573e-03, -2.5190415e-03, -8.1363041e-04, -2.0068504e-03,
-        2.8674023e-03, -5.1890808e-04,  2.8265936e-03,  3.6312573e-05,
-        2.6457831e-03,  2.3861348e-03,  1.3511210e-03, -3.2176888e-03,
-        1.8514975e-03,  3.2496960e-03, -1.2075598e-03,  1.7100080e-03,
-        4.3752487e-03,  3.9645466e-03,  1.7413094e-03, -5.5871054e-04,
-       -8.6355320e-04, -2.6644317e-03, -4.2437026e-03, -4.3749502e-03,
-       -3.5916551e-03, -3.8594855e-03,  5.5677756e-06, -3.3938705e-03],
+<pre>array([ 2.8449595e-03, -4.9694366e-04,  1.9230103e-03,  4.0492006e-03,
+        1.0729039e-03, -2.5723472e-03,  5.4888036e-03, -3.7692313e-03,
+       -7.4848642e-05, -1.6766953e-03,  1.7807762e-03, -1.6892144e-03,
+        2.5574917e-03,  2.1110116e-04,  3.0710178e-03,  3.1984823e-03,
+        3.2331848e-03,  2.7966057e-03,  3.1579782e-03,  1.3582964e-03,
+       -2.0590653e-03,  2.4833903e-03,  2.9446464e-04,  2.0955815e-03,
+        3.5245351e-03,  1.3824453e-03, -1.3032445e-03,  4.8048627e-03,
+        1.8905426e-03, -4.1177152e-03,  5.3840424e-03,  3.9010916e-03,
+        5.1269173e-03,  4.2400818e-04, -2.0349710e-03, -3.8327286e-03,
+       -2.0516610e-03, -3.9965967e-03,  2.5268099e-03, -1.2546158e-03,
+        3.9905938e-03, -5.4420991e-04, -7.6779717e-04, -4.2339549e-03,
+       -2.8023152e-03, -8.9949672e-04, -2.5319629e-03, -5.5303420e-03,
+       -3.2150629e-03,  5.1356154e-03, -4.9937009e-03, -2.8191484e-04,
+        9.7763329e-04, -3.1506915e-03,  2.5469938e-03,  1.3207507e-03,
+        3.1148709e-04,  4.3498762e-03,  5.2407000e-04, -1.2459328e-03,
+        8.4624614e-04, -1.6040873e-03,  8.7911281e-04, -4.0397691e-03,
+       -9.0108102e-04, -3.5283726e-03, -1.6270311e-03,  3.1947384e-03,
+       -9.6376200e-04, -3.5352944e-03, -3.8870417e-03, -1.7466254e-03,
+       -3.2097468e-04,  2.6903613e-03,  4.2513735e-04, -3.3527166e-03,
+        2.4551398e-04,  3.2865391e-03,  3.2840662e-03, -4.0097436e-04,
+       -4.7572777e-03, -1.2515705e-03, -2.3117797e-03,  8.3367218e-04,
+       -5.5916058e-03,  3.1234799e-03,  4.5684292e-03,  1.7478068e-04,
+       -1.6598348e-03,  1.1321295e-03, -4.2953067e-03,  1.0541234e-03,
+        4.6791085e-03,  1.9311790e-03, -4.2412737e-03, -2.9575401e-03,
+       -2.2138522e-03, -1.8380523e-03,  2.2053844e-03,  3.2701399e-03],
       dtype=float32)</pre>
 </div>
 
@@ -13994,9 +14002,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Finding Similar Words</span>
-<span class="n">sim_words</span> <span class="o">=</span> <span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="s1">&#39;engineer&#39;</span><span class="p">)</span>
-<span class="n">sim_words</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Finding Positive Similar Words</span>
+<span class="n">sim_words_pos</span> <span class="o">=</span> <span class="n">w2v_model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="n">positive</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;engineer&#39;</span><span class="p">],</span> <span class="n">topn</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">sim_words_pos</span>
 </pre></div>
 
     </div>
@@ -14015,16 +14023,50 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[(&#39;large&#39;, 0.5806270241737366),
- (&#39;miss&#39;, 0.5758033990859985),
- (&#39;night&#39;, 0.5680072903633118),
- (&#39;father&#39;, 0.5676817893981934),
- (&#39;said&#39;, 0.5641884803771973),
- (&#39;round&#39;, 0.5637078285217285),
- (&#39;good&#39;, 0.5607061386108398),
- (&#39;came&#39;, 0.556950032711029),
- (&#39;small&#39;, 0.5561443567276001),
- (&#39;remarked&#39;, 0.5548152327537537)]</pre>
+<pre>[(&#39;soon&#39;, 0.4715343415737152),
+ (&#39;think&#39;, 0.470091849565506),
+ (&#39;hall&#39;, 0.4661974310874939),
+ (&#39;cry&#39;, 0.4632185399532318),
+ (&#39;matter&#39;, 0.45925986766815186)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Finding Negative Similar Words</span>
+<span class="n">sim_words_neg</span> <span class="o">=</span> <span class="n">w2v_model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="n">negative</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;engineer&#39;</span><span class="p">],</span> <span class="n">topn</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">sim_words_neg</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[21]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;affected&#39;, 0.33061444759368896),
+ (&#39;group&#39;, 0.2769841253757477),
+ (&#39;florida&#39;, 0.2563122510910034),
+ (&#39;flashed&#39;, 0.25461259484291077),
+ (&#39;daresay&#39;, 0.25313204526901245)]</pre>
 </div>
 
 </div>
