@@ -13147,6 +13147,8 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load Python libraries</span>
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">DataFrame</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
@@ -13171,6 +13173,21 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load Plot libraries</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13180,7 +13197,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Util function to read a plain text file</span>
@@ -13199,7 +13216,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get text sample</span>
@@ -13218,7 +13235,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13235,7 +13252,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show first 1000 characters of document</span>
@@ -13252,7 +13269,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13276,7 +13293,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Cleaing the text</span>
@@ -13298,7 +13315,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13315,7 +13332,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tokenize text in sentences</span>
@@ -13333,7 +13350,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13350,7 +13367,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tokenize sentences in words</span>
@@ -13368,7 +13385,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -13429,10 +13446,189 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stopwords_en</span> <span class="o">=</span> <span class="n">en</span><span class="o">.</span><span class="n">stop_words</span><span class="o">.</span><span class="n">STOP_WORDS</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Count the words in a document and return the most N repeated</span>
+<span class="k">def</span> <span class="nf">count_words</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sent</span><span class="p">:</span>
+            <span class="n">words</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">words</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the most common words in the document</span>
+<span class="n">n_words</span> <span class="o">=</span> <span class="n">count_words</span><span class="p">(</span><span class="n">word_list</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">n_words</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[11]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>the</td>
+      <td>5636</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>i</td>
+      <td>3038</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>and</td>
+      <td>3020</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>to</td>
+      <td>2744</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>of</td>
+      <td>2661</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>a</td>
+      <td>2643</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>in</td>
+      <td>1766</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>that</td>
+      <td>1752</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>it</td>
+      <td>1737</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>you</td>
+      <td>1503</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Plot the most common words in the document</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;quantity&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The 50 Most Common Words in document&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Stopwords:</strong> refers to the most common words in a language, which do not significantly affect the meaning of the text.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get English stopwords</span>
+<span class="n">stopwords_en</span> <span class="o">=</span> <span class="n">en</span><span class="o">.</span><span class="n">stop_words</span><span class="o">.</span><span class="n">STOP_WORDS</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">stopwords_en</span><span class="p">)</span>
 </pre></div>
 
@@ -13450,7 +13646,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;not&#39;, &#39;empty&#39;, &#39;afterwards&#39;, &#39;that&#39;, &#39;each&#39;, &#39;anyhow&#39;, &#39;she&#39;, &#39;themselves&#39;, &#39;hereby&#39;, &#39;their&#39;, &#39;same&#39;, &#39;who&#39;, &#39;now&#39;, &#39;meanwhile&#39;, &#39;as&#39;, &#39;and&#39;, &#39;since&#39;, &#39;with&#39;, &#39;without&#39;, &#39;was&#39;, &#39;please&#39;, &#39;to&#39;, &#39;herein&#39;, &#39;otherwise&#39;, &#39;under&#39;, &#39;however&#39;, &#39;can&#39;, &#39;herself&#39;, &#39;make&#39;, &#39;never&#39;, &#39;such&#39;, &#39;then&#39;, &#39;eight&#39;, &#39;our&#39;, &#39;these&#39;, &#39;amount&#39;, &#39;sixty&#39;, &#39;nor&#39;, &#39;just&#39;, &#39;forty&#39;, &#39;often&#39;, &#39;could&#39;, &#39;less&#39;, &#39;few&#39;, &#39;every&#39;, &#39;no&#39;, &#39;most&#39;, &#39;here&#39;, &#39;me&#39;, &#39;were&#39;, &#39;fifty&#39;, &#39;whereafter&#39;, &#39;anywhere&#39;, &#34;&#39;re&#34;, &#39;but&#39;, &#39;has&#39;, &#39;move&#39;, &#39;should&#39;, &#39;wherein&#39;, &#39;some&#39;, &#39;on&#39;, &#39;yours&#39;, &#39;first&#39;, &#39;if&#39;, &#39;next&#39;, &#39;ours&#39;, &#39;serious&#39;, &#39;thereupon&#39;, &#39;used&#39;, &#39;wherever&#39;, &#39;amongst&#39;, &#39;in&#39;, &#39;latter&#39;, &#39;somehow&#39;, &#39;side&#39;, &#39;almost&#39;, &#39;do&#39;, &#39;upon&#39;, &#39;your&#39;, &#39;through&#39;, &#39;been&#39;, &#39;‘s&#39;, &#39;except&#39;, &#39;full&#39;, &#39;what&#39;, &#39;into&#39;, &#39;show&#39;, &#39;ten&#39;, &#39;call&#39;, &#39;several&#39;, &#39;there&#39;, &#39;yourself&#39;, &#39;third&#39;, &#34;&#39;d&#34;, &#39;beforehand&#39;, &#39;least&#39;, &#39;seems&#39;, &#39;of&#39;, &#39;how&#39;, &#39;so&#39;, &#39;‘m&#39;, &#39;alone&#39;, &#39;beyond&#39;, &#39;thus&#39;, &#39;nine&#39;, &#39;mine&#39;, &#39;across&#39;, &#39;while&#39;, &#39;are&#39;, &#39;due&#39;, &#39;must&#39;, &#39;will&#39;, &#39;together&#39;, &#39;both&#39;, &#39;within&#39;, &#39;against&#39;, &#39;eleven&#39;, &#39;would&#39;, &#39;therefore&#39;, &#39;became&#39;, &#39;out&#39;, &#39;myself&#39;, &#39;else&#39;, &#39;we&#39;, &#39;’d&#39;, &#39;too&#39;, &#39;where&#39;, &#39;whereupon&#39;, &#39;own&#39;, &#39;by&#39;, &#39;itself&#39;, &#39;everywhere&#39;, &#39;thence&#39;, &#39;nowhere&#39;, &#39;either&#39;, &#39;‘ll&#39;, &#34;&#39;ll&#34;, &#39;at&#39;, &#39;made&#39;, &#39;ourselves&#39;, &#39;whence&#39;, &#39;everyone&#39;, &#39;latterly&#39;, &#39;any&#39;, &#39;regarding&#39;, &#39;see&#39;, &#39;via&#39;, &#39;because&#39;, &#39;cannot&#39;, &#39;becomes&#39;, &#39;done&#39;, &#39;go&#39;, &#39;someone&#39;, &#39;becoming&#39;, &#39;doing&#39;, &#39;anything&#39;, &#39;seeming&#39;, &#34;&#39;s&#34;, &#39;five&#39;, &#39;moreover&#39;, &#39;’re&#39;, &#39;up&#39;, &#39;whom&#39;, &#34;&#39;m&#34;, &#39;ever&#39;, &#39;besides&#39;, &#39;always&#39;, &#39;n’t&#39;, &#39;’ve&#39;, &#39;or&#39;, &#39;front&#39;, &#39;‘ve&#39;, &#39;top&#39;, &#39;whereas&#39;, &#39;they&#39;, &#39;seemed&#39;, &#39;re&#39;, &#39;give&#39;, &#39;before&#39;, &#39;thru&#39;, &#39;why&#39;, &#39;those&#39;, &#39;well&#39;, &#39;whoever&#39;, &#39;between&#39;, &#39;from&#39;, &#39;more&#39;, &#39;part&#39;, &#39;them&#39;, &#39;being&#39;, &#39;ca&#39;, &#39;his&#39;, &#39;back&#39;, &#39;quite&#39;, &#39;further&#39;, &#39;noone&#39;, &#39;again&#39;, &#39;other&#39;, &#39;sometimes&#39;, &#39;beside&#39;, &#39;whose&#39;, &#39;per&#39;, &#39;did&#39;, &#39;than&#39;, &#39;when&#39;, &#39;thereby&#39;, &#39;hereupon&#39;, &#39;namely&#39;, &#39;whether&#39;, &#39;although&#39;, &#39;you&#39;, &#39;below&#39;, &#39;though&#39;, &#39;even&#39;, &#39;formerly&#39;, &#39;name&#39;, &#39;throughout&#39;, &#34;n&#39;t&#34;, &#39;onto&#39;, &#39;also&#39;, &#39;rather&#39;, &#39;whatever&#39;, &#39;whereby&#39;, &#39;might&#39;, &#39;therein&#39;, &#39;its&#39;, &#39;become&#39;, &#39;using&#39;, &#39;along&#39;, &#39;indeed&#39;, &#39;only&#39;, &#39;an&#39;, &#39;us&#39;, &#39;may&#39;, &#39;none&#39;, &#39;various&#39;, &#39;fifteen&#39;, &#39;four&#39;, &#39;yourselves&#39;, &#39;twenty&#39;, &#39;hundred&#39;, &#39;unless&#39;, &#39;does&#39;, &#39;he&#39;, &#39;hereafter&#39;, &#39;perhaps&#39;, &#39;down&#39;, &#39;six&#39;, &#39;whither&#39;, &#39;’s&#39;, &#39;during&#39;, &#39;anyone&#39;, &#39;seem&#39;, &#39;‘re&#39;, &#39;which&#39;, &#39;another&#39;, &#39;mostly&#39;, &#39;all&#39;, &#39;i&#39;, &#39;many&#39;, &#39;’ll&#39;, &#39;had&#39;, &#39;nobody&#39;, &#39;one&#39;, &#39;yet&#39;, &#39;everything&#39;, &#39;off&#39;, &#39;for&#39;, &#39;over&#39;, &#39;former&#39;, &#39;put&#39;, &#39;sometime&#39;, &#39;it&#39;, &#39;others&#39;, &#39;something&#39;, &#39;two&#39;, &#39;towards&#39;, &#39;’m&#39;, &#39;behind&#39;, &#39;bottom&#39;, &#39;until&#39;, &#39;nevertheless&#39;, &#39;‘d&#39;, &#39;above&#39;, &#39;after&#39;, &#39;my&#39;, &#39;among&#39;, &#39;take&#39;, &#39;whenever&#39;, &#39;really&#39;, &#39;thereafter&#39;, &#39;last&#39;, &#39;already&#39;, &#39;elsewhere&#39;, &#39;get&#39;, &#39;very&#39;, &#39;her&#39;, &#39;be&#39;, &#39;enough&#39;, &#39;around&#39;, &#39;hers&#39;, &#39;somewhere&#39;, &#39;anyway&#39;, &#39;this&#39;, &#39;much&#39;, &#39;n‘t&#39;, &#39;about&#39;, &#39;three&#39;, &#39;twelve&#39;, &#34;&#39;ve&#34;, &#39;say&#39;, &#39;keep&#39;, &#39;neither&#39;, &#39;still&#39;, &#39;hence&#39;, &#39;is&#39;, &#39;nothing&#39;, &#39;the&#39;, &#39;him&#39;, &#39;toward&#39;, &#39;have&#39;, &#39;a&#39;, &#39;himself&#39;, &#39;whole&#39;, &#39;once&#39;, &#39;am&#39;}
+<pre>{&#39;another&#39;, &#39;done&#39;, &#39;his&#39;, &#39;say&#39;, &#39;many&#39;, &#39;sometimes&#39;, &#39;across&#39;, &#39;unless&#39;, &#39;up&#39;, &#39;this&#39;, &#39;beside&#39;, &#39;below&#39;, &#39;may&#39;, &#39;above&#39;, &#39;less&#39;, &#39;make&#39;, &#39;somehow&#39;, &#39;there&#39;, &#39;who&#39;, &#39;n’t&#39;, &#39;thereupon&#39;, &#39;me&#39;, &#39;two&#39;, &#39;via&#39;, &#39;amount&#39;, &#39;give&#39;, &#39;my&#39;, &#39;hence&#39;, &#39;other&#39;, &#39;she&#39;, &#39;ten&#39;, &#39;thereby&#39;, &#39;yet&#39;, &#34;&#39;s&#34;, &#34;&#39;m&#34;, &#39;anything&#39;, &#39;back&#39;, &#39;forty&#39;, &#39;whose&#39;, &#39;sometime&#39;, &#39;re&#39;, &#39;is&#39;, &#39;had&#39;, &#39;’ve&#39;, &#39;whenever&#39;, &#39;could&#39;, &#39;thereafter&#39;, &#39;therefore&#39;, &#39;’s&#39;, &#39;anywhere&#39;, &#39;but&#39;, &#39;the&#39;, &#39;perhaps&#39;, &#39;under&#39;, &#39;such&#39;, &#39;mostly&#39;, &#39;anyone&#39;, &#39;afterwards&#39;, &#39;it&#39;, &#39;nobody&#39;, &#39;since&#39;, &#39;without&#39;, &#39;everywhere&#39;, &#39;last&#39;, &#39;therein&#39;, &#39;down&#39;, &#39;if&#39;, &#39;keep&#39;, &#39;move&#39;, &#39;although&#39;, &#39;just&#39;, &#39;a&#39;, &#39;nor&#39;, &#39;seeming&#39;, &#39;wherein&#39;, &#39;out&#39;, &#39;twenty&#39;, &#39;all&#39;, &#39;behind&#39;, &#39;nowhere&#39;, &#39;still&#39;, &#39;itself&#39;, &#39;them&#39;, &#39;everything&#39;, &#39;someone&#39;, &#39;seems&#39;, &#39;same&#39;, &#39;elsewhere&#39;, &#39;somewhere&#39;, &#39;else&#39;, &#39;hereupon&#39;, &#39;seemed&#39;, &#39;no&#39;, &#39;any&#39;, &#39;part&#39;, &#39;more&#39;, &#39;former&#39;, &#39;however&#39;, &#39;never&#39;, &#39;whereafter&#39;, &#39;also&#39;, &#39;‘ve&#39;, &#39;not&#39;, &#39;three&#39;, &#39;either&#39;, &#39;nothing&#39;, &#39;then&#39;, &#39;front&#39;, &#39;against&#39;, &#39;seem&#39;, &#39;becomes&#39;, &#39;himself&#39;, &#39;on&#39;, &#39;though&#39;, &#39;herself&#39;, &#39;why&#39;, &#39;latter&#39;, &#39;see&#39;, &#39;enough&#39;, &#39;your&#39;, &#39;top&#39;, &#39;six&#39;, &#39;indeed&#39;, &#39;quite&#39;, &#34;&#39;d&#34;, &#39;their&#39;, &#39;must&#39;, &#39;whom&#39;, &#39;before&#39;, &#39;whoever&#39;, &#39;’ll&#39;, &#39;get&#39;, &#39;by&#39;, &#39;one&#39;, &#39;onto&#39;, &#39;except&#39;, &#39;which&#39;, &#39;hers&#39;, &#39;what&#39;, &#39;doing&#39;, &#39;yourselves&#39;, &#39;’d&#39;, &#39;own&#39;, &#39;has&#39;, &#39;because&#39;, &#39;have&#39;, &#39;alone&#39;, &#39;from&#39;, &#39;side&#39;, &#39;using&#39;, &#39;first&#39;, &#39;nine&#39;, &#39;often&#39;, &#39;rather&#39;, &#39;show&#39;, &#39;otherwise&#39;, &#39;n‘t&#39;, &#39;’m&#39;, &#39;over&#39;, &#39;serious&#39;, &#39;they&#39;, &#39;might&#39;, &#39;eleven&#39;, &#39;through&#39;, &#39;well&#39;, &#39;‘re&#39;, &#39;while&#39;, &#39;others&#39;, &#39;least&#39;, &#39;or&#39;, &#39;throughout&#39;, &#39;various&#39;, &#39;really&#39;, &#39;that&#39;, &#39;its&#39;, &#39;whereas&#39;, &#39;ever&#39;, &#39;every&#39;, &#39;once&#39;, &#39;along&#39;, &#39;after&#39;, &#39;neither&#39;, &#39;at&#39;, &#39;themselves&#39;, &#39;you&#39;, &#39;always&#39;, &#39;should&#39;, &#39;per&#39;, &#39;some&#39;, &#39;both&#39;, &#39;anyway&#39;, &#39;third&#39;, &#39;very&#39;, &#34;&#39;ve&#34;, &#39;would&#39;, &#39;‘s&#39;, &#39;him&#39;, &#39;take&#39;, &#39;about&#39;, &#39;her&#39;, &#39;each&#39;, &#39;between&#39;, &#39;namely&#39;, &#39;will&#39;, &#39;am&#39;, &#39;be&#39;, &#39;everyone&#39;, &#39;did&#39;, &#39;these&#39;, &#39;until&#39;, &#39;made&#39;, &#39;five&#39;, &#39;moreover&#39;, &#39;within&#39;, &#39;been&#39;, &#39;he&#39;, &#39;go&#39;, &#39;bottom&#39;, &#34;&#39;ll&#34;, &#39;beforehand&#39;, &#39;noone&#39;, &#39;next&#39;, &#39;sixty&#39;, &#39;name&#39;, &#39;anyhow&#39;, &#39;into&#39;, &#39;meanwhile&#39;, &#39;were&#39;, &#39;fifteen&#39;, &#39;almost&#39;, &#39;become&#39;, &#39;thus&#39;, &#39;us&#39;, &#39;several&#39;, &#39;call&#39;, &#39;became&#39;, &#39;can&#39;, &#39;with&#39;, &#34;n&#39;t&#34;, &#39;wherever&#39;, &#39;whereupon&#39;, &#39;four&#39;, &#39;‘d&#39;, &#39;further&#39;, &#39;nevertheless&#39;, &#39;herein&#39;, &#39;than&#39;, &#39;‘ll&#39;, &#39;due&#39;, &#39;those&#39;, &#39;toward&#39;, &#39;eight&#39;, &#39;yourself&#39;, &#39;off&#39;, &#39;yours&#39;, &#39;‘m&#39;, &#39;empty&#39;, &#34;&#39;re&#34;, &#39;used&#39;, &#39;an&#39;, &#39;when&#39;, &#39;twelve&#39;, &#39;something&#39;, &#39;do&#39;, &#39;together&#39;, &#39;hereafter&#39;, &#39;now&#39;, &#39;few&#39;, &#39;hundred&#39;, &#39;ours&#39;, &#39;too&#39;, &#39;myself&#39;, &#39;being&#39;, &#39;whole&#39;, &#39;during&#39;, &#39;how&#39;, &#39;and&#39;, &#39;are&#39;, &#39;latterly&#39;, &#39;beyond&#39;, &#39;amongst&#39;, &#39;put&#39;, &#39;thence&#39;, &#39;to&#39;, &#39;upon&#39;, &#39;regarding&#39;, &#39;already&#39;, &#39;besides&#39;, &#39;around&#39;, &#39;fifty&#39;, &#39;so&#39;, &#39;mine&#39;, &#39;formerly&#39;, &#39;whereby&#39;, &#39;whether&#39;, &#39;whither&#39;, &#39;thru&#39;, &#39;cannot&#39;, &#39;towards&#39;, &#39;becoming&#39;, &#39;again&#39;, &#39;ca&#39;, &#39;much&#39;, &#39;only&#39;, &#39;in&#39;, &#39;ourselves&#39;, &#39;was&#39;, &#39;among&#39;, &#39;i&#39;, &#39;hereby&#39;, &#39;here&#39;, &#39;of&#39;, &#39;our&#39;, &#39;most&#39;, &#39;none&#39;, &#39;full&#39;, &#39;whatever&#39;, &#39;does&#39;, &#39;we&#39;, &#39;please&#39;, &#39;whence&#39;, &#39;for&#39;, &#39;where&#39;, &#39;’re&#39;, &#39;as&#39;, &#39;even&#39;}
 </pre>
 </div>
 </div>
@@ -13461,7 +13657,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Remove stopwords</span>
@@ -13482,7 +13678,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -13513,6 +13709,155 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the most common words in the document after removing the stopwords</span>
+<span class="n">n_words</span> <span class="o">=</span> <span class="n">count_words</span><span class="p">(</span><span class="n">all_words</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">n_words</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[15]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>said</td>
+      <td>486</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>holmes</td>
+      <td>465</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>man</td>
+      <td>305</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>little</td>
+      <td>269</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>think</td>
+      <td>174</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>room</td>
+      <td>171</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>know</td>
+      <td>170</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>shall</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>come</td>
+      <td>161</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>time</td>
+      <td>151</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Plot the most common words in the document after removing the stopwords</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;quantity&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The 50 Most Common Words in document&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13522,7 +13867,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create Word2Vec model</span>
@@ -13534,12 +13879,20 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Vocabulary:</strong> unique words of the document.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show vocabulary size</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show vocabulary size: unique words occurring at least twice</span>
 <span class="n">vocabulary</span> <span class="o">=</span> <span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span>  
 <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
 </pre></div>
@@ -13554,7 +13907,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[12]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -13571,7 +13924,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show &#39;project&#39; vector</span>
@@ -13588,32 +13941,37 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[19]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([ 0.00571524,  0.0037815 , -0.0029851 , -0.00234666, -0.00384644,
-        0.0026138 ,  0.00376731, -0.00350076, -0.00345531, -0.00123497,
-       -0.00392786, -0.00487326,  0.002396  ,  0.00065813, -0.00089581,
-        0.00288083,  0.003073  , -0.00023033,  0.00064188,  0.00469708,
-        0.00057567, -0.00287395,  0.00170696, -0.00220402, -0.00369562,
-        0.00048359, -0.00554605,  0.00117496,  0.00097162,  0.00056364,
-       -0.00300056,  0.00420297,  0.00553688,  0.00070874, -0.0008803 ,
-       -0.00219831,  0.00295734,  0.00202147, -0.00204766,  0.00069915,
-        0.00155343, -0.00173383,  0.00101644,  0.0037438 , -0.00295153,
-       -0.0027267 , -0.00293964, -0.00352298, -0.00384365,  0.00290935,
-       -0.00594365, -0.00033689, -0.00500323, -0.0002361 , -0.00169291,
-        0.00290482, -0.0013868 ,  0.00172921,  0.00102748, -0.00260645,
-        0.00270165, -0.002158  ,  0.00060265,  0.00046697, -0.00544463,
-       -0.00219709, -0.00153067, -0.00328287, -0.00191149, -0.00256149,
-        0.00487508, -0.00325485,  0.00222084, -0.00238673,  0.0008818 ,
-       -0.00223221,  0.00135853,  0.00236858, -0.00180198, -0.0013227 ,
-        0.00433142, -0.0015103 ,  0.00303107, -0.00276974,  0.00098357,
-        0.00057665,  0.00166037, -0.00394594, -0.00010403,  0.00187582,
-       -0.00525217, -0.00191993,  0.00092555,  0.00087304,  0.00067075,
-       -0.00120125,  0.00246809, -0.00013627, -0.00433768,  0.00246021],
+<pre>array([-4.1242377e-03, -4.8785098e-03, -1.5371203e-03,  7.8736461e-04,
+       -5.2691959e-03, -2.1428671e-03, -1.1461255e-03, -4.4575250e-03,
+        4.1640261e-03,  1.8314732e-03, -4.4989684e-03,  4.0191375e-03,
+       -1.6716128e-03,  1.9166416e-03, -3.0781582e-04,  1.3745253e-03,
+        5.3709382e-03,  3.9130566e-03,  5.1774055e-04,  4.2805211e-03,
+        5.2312030e-03, -4.6914392e-03,  2.4642334e-03,  3.7487336e-03,
+        4.9815807e-03,  3.4271481e-03,  3.4816687e-03,  4.8801438e-03,
+       -2.4385648e-04,  1.1956525e-03,  1.5167182e-04,  3.3736450e-03,
+       -2.0818915e-03, -1.9271194e-03, -2.3130763e-04,  1.9897600e-03,
+       -5.0131802e-04, -3.6548004e-03,  4.8042405e-03,  5.5707749e-03,
+       -1.0397201e-03, -4.9172160e-03,  3.1003952e-03, -1.4317000e-03,
+        4.5858009e-04,  5.4594997e-04, -3.7557471e-03,  3.1489877e-03,
+       -2.5877627e-04, -1.8915613e-03,  4.3612220e-03, -4.7539212e-03,
+        2.7839013e-03, -5.2043824e-03, -3.6814755e-03, -3.1785730e-03,
+       -3.2863205e-03,  5.3604692e-04,  2.2773172e-03,  2.0409187e-03,
+        1.2935755e-03,  1.5845458e-03, -4.7150445e-03,  1.2324932e-03,
+        1.6395095e-03,  4.9838526e-03,  1.2908954e-03, -5.1283906e-03,
+       -1.0361683e-03, -3.9575333e-03, -6.5360515e-04,  4.0252409e-03,
+        1.3660573e-03, -2.5190415e-03, -8.1363041e-04, -2.0068504e-03,
+        2.8674023e-03, -5.1890808e-04,  2.8265936e-03,  3.6312573e-05,
+        2.6457831e-03,  2.3861348e-03,  1.3511210e-03, -3.2176888e-03,
+        1.8514975e-03,  3.2496960e-03, -1.2075598e-03,  1.7100080e-03,
+        4.3752487e-03,  3.9645466e-03,  1.7413094e-03, -5.5871054e-04,
+       -8.6355320e-04, -2.6644317e-03, -4.2437026e-03, -4.3749502e-03,
+       -3.5916551e-03, -3.8594855e-03,  5.5677756e-06, -3.3938705e-03],
       dtype=float32)</pre>
 </div>
 
@@ -13622,6 +13980,66 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Similar Words:</strong> Words more similar in terms of meaning and context.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Finding Similar Words</span>
+<span class="n">sim_words</span> <span class="o">=</span> <span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="s1">&#39;engineer&#39;</span><span class="p">)</span>
+<span class="n">sim_words</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;large&#39;, 0.5806270241737366),
+ (&#39;miss&#39;, 0.5758033990859985),
+ (&#39;night&#39;, 0.5680072903633118),
+ (&#39;father&#39;, 0.5676817893981934),
+ (&#39;said&#39;, 0.5641884803771973),
+ (&#39;round&#39;, 0.5637078285217285),
+ (&#39;good&#39;, 0.5607061386108398),
+ (&#39;came&#39;, 0.556950032711029),
+ (&#39;small&#39;, 0.5561443567276001),
+ (&#39;remarked&#39;, 0.5548152327537537)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><hr></p>
+<p><a href="https://github.com/ansegura7/NLP/">« Home</a></p>
+</div>
+</div>
 </div>
     </div>
   </div>
