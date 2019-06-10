@@ -30,7 +30,7 @@ Books in plain text, both in English and Spanish.
     python -m spacy download en
     python -m spacy download es
     conda install -c anaconda gensim
-	conda install -c conda-forge wordcloud
+    conda install -c conda-forge wordcloud
 ```
 
 ## Contributing and Feedback
