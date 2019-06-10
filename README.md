@@ -17,6 +17,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 	<li>Tokenize and remove Stopwords</li>
 	<li>Create a Word2Vec model</li>
 	<li>Plot similars words</li>
+	<li>Export similarity between the words</li>
 </ul>
 </details>
 
