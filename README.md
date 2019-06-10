@@ -2,8 +2,23 @@
 Natural Language Processing project with Python frameworks. NLP is a discipline where computer science, artificial intelligence and cognitive logic are intercepted, with the objective that machines can read and understand our language for decision making.
 
 ## Examples
-1. <a href="https://ansegura7.github.io/NLP/pages/NLP_SpaCy.html" >NLP with spaCy</a>
-2. <a href="https://ansegura7.github.io/NLP/pages/NLP_Word2Vec.html" >Word Embedding with Gensim</a>
+<details>
+<summary>1. <a href="https://ansegura7.github.io/NLP/pages/NLP_SpaCy.html" >NLP with spaCy</a></summary>
+<ul>
+	<li>Read natural text from a Spanish book</li>
+	<li>Create a NLP model with spaCy</li>
+	<li>Working with POS, NES and sentences</li>
+</ul>
+</details>
+<details>
+<summary>2. <a href="https://ansegura7.github.io/NLP/pages/NLP_Word2Vec.html" >Word Embedding with Gensim</a></summary>
+<ul>
+	<li>Read natural text from a English book</li>
+	<li>Tokenize and remove Stopwords</li>
+	<li>Create a Word2Vec model</li>
+	<li>Plot similars words</li>
+</ul>
+</details>
 
 ## Data
 Books in plain text.
