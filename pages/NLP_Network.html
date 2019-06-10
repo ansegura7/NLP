@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+	Created By: Andres Segura Tinoco
+	Created On: June 04, 2019
+	Analysis: Networks and Force System
+	Licencia: MIT
+	-->
+<html lang="en">
+	<header>
+		<meta charset="utf-8">
+		<title>NLP - Networks</title>
+
+		<!-- Scripts -->
+		<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<script type="text/javascript" language="javascript" src="https://d3js.org/d3.v5.min.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		
+		<!-- Style -->
+		<link rel="stylesheet" type="text/css" href="css/style.css" >
+	</header>
+	<body>
+		<div id="divContent" align="center">
+			<div id="divHeader" align="left" >
+				<h1>NLP - Networks</h1>
+				<ul>
+					<li><strong>Created by Andrés Segura Tinoco</strong></li>
+					<li><strong>Created on May 14, 2019</strong></li>
+				</ul>
+			</div>
+			
+			<div id="divMain" align="center" >
+				<div align="left" >
+					<h2>Networks and Force System</h2>
+				</div>
+				<div class="divText" >
+					<p>Network visualization that shows the relationships between each word in 'The Adventures of Sherlock Holmes - Arthur Conan Doyle' book. 
+						Both the semantic and the closeness relations of the words are taken into account. 
+						The network self-organizes using the force system of d3.js to find interesting topologies and paths between the data.</p>
+				</div>
+				
+				<div class="divText" align="left">
+					<label for="inpThreshold">Threshold:</label>
+					<input id="inpThreshold" type="range" min="0.05" max="0.95" step="0.05" value="0.80" onchange="ast.changeThreshold()">
+					<label id="inpLabel"></label>
+
+					<label for="cmbPalette" style="margin-left:30px;" >Palette:</label>
+					<select id="cmbPalette" onchange="ast.changePalette()">
+						<option>Oranges</option>
+						<option>Purples</option>
+						<option>Reds</option>
+					</select>
+				</div>
+				
+				<svg id="svgNetwork1" class="svgChart" ></svg>
+				<div class="divSubTitle">Relation between each word in the document.</div>
+				
+				<div id="divFooter" align="left" >
+					<hr>
+					<p><a href="https://ansegura7.github.io/DataScience_FIFA19Data/">&laquo; Home</a></p>
+				</div>
+			</div>
+			
+			<!-- Run page script -->
+			<script type="text/javascript">
+				$(document).ready(() => { ast.init(); });
+			</script>
+
+		</div>
+	</body>
+</html>
