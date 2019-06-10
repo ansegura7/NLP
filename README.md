@@ -2,7 +2,7 @@
 Natural Language Processing project with Python frameworks. NLP is a discipline where computer science, artificial intelligence and cognitive logic are intercepted, with the objective that machines can read and understand our language for decision making.
 
 ## Examples
-<details>
+<details open>
 <summary>1. <a href="https://ansegura7.github.io/NLP/pages/NLP_SpaCy.html" >NLP with spaCy</a></summary>
 <ul>
 	<li>Read natural text from a Spanish book</li>
@@ -21,7 +21,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 </details>
 
 ## Data
-Books in plain text.
+Books in plain text, both in English and Spanish.
 
 ## Python Dependencies
 ```
@@ -29,6 +29,7 @@ Books in plain text.
     python -m spacy download en
     python -m spacy download es
     conda install -c anaconda gensim
+	conda install -c conda-forge wordcloud
 ```
 
 ## Contributing and Feedback
