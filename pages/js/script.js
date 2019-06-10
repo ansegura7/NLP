@@ -1,6 +1,6 @@
 // Init parameters
 var ast = {
-	"width": 1000, "height": 800, "threshold": 0.8, "max_weight": 0, "colorPalette": "Oranges"
+	"width": 1000, "height": 800, "threshold": 0.98, "max_weight": 0, "colorPalette": "Purples"
 }, util = {};
 
 // Init dynamic components
@@ -15,7 +15,7 @@ ast.init = () => {
 // Load dataW
 ast.loadData = () => {
 	let filepath = "https://raw.githubusercontent.com/ansegura7/NLP/master/data/network/";
-	let filename = filepath + "word_similarity.csv";
+	let filename = filepath + "sparse_similarity.csv";
 
 	d3.csv(filename).then(
 		function(rawdata) {
@@ -66,17 +66,16 @@ ast.createNetwork = () => {
 	let links = [];
 
 	ast.data.forEach(function(row, i) {
-		Object.keys(row).forEach(function(n, j) {
-			if (i > j) {
-				let s = vocabulary[i];
-				let t = vocabulary[j];
-				let w = ast.data[i][t];
 
-				if (ast.data[i][t] >= ast.threshold) {
-					links.push({ source: s, target: t , weight: w });
-					util.addDictToJsonArray(nodes, s);
-					util.addDictToJsonArray(nodes, t);
-				}
+		Object.keys(row).forEach(function(n, j) {
+			let s = vocabulary[i];
+			let t = vocabulary[j];
+			let w = ast.data[i][t];
+
+			if (s != t && w >= ast.threshold) {
+				links.push({ source: s, target: t , weight: w });
+				util.addDictToJsonArray(nodes, s);
+				util.addDictToJsonArray(nodes, t);
 			}
 		});
 	});
@@ -126,14 +125,14 @@ ast.doNetworkChart = (svg, nodes, links, cTitle, xTitle, yTitle) => {
 		.force("charge", d3.forceManyBody()
 			.strength(-50))
 		.force("x", d3.forceX(iwidth/2)
-			.strength(0.08))
+			.strength(0.3))
 		.force("y", d3.forceY(iheight/2)
-			.strength(0.1))
-		.force("collide", d3.forceCollide(d => { d.weight * 2} ))
+			.strength(0.3))
+		.force("collide", d3.forceCollide(d => d.weight * 2 ))
 		.force("link", d3.forceLink(links)
 			.id((d) => d.name)
-			.distance(40)
-			.strength(0.5))
+			.distance(100)
+			.strength(1))
 		.on("tick", ticked);
 	
 	// Create adjacency matrix
@@ -160,11 +159,11 @@ ast.doNetworkChart = (svg, nodes, links, cTitle, xTitle, yTitle) => {
 		.enter()
 		.append("g")
 		.attr("class", "node")
-		.attr("transform", (n) => "translate(" + xAvg + "," + yAvg + ")")
-		.call(d3.drag()
-			.on("start", dragstarted)
-			.on("drag", dragged)
-			.on("end", dragended));
+		.attr("transform", (n) => "translate(" + xAvg + "," + yAvg + ")");
+		// .call(d3.drag()
+		// 	.on("start", dragstarted)
+		// 	.on("drag", dragged)
+		// 	.on("end", dragended));
 	
 	// Add circle to node
 	selNodes.append("circle")
@@ -182,7 +181,7 @@ ast.doNetworkChart = (svg, nodes, links, cTitle, xTitle, yTitle) => {
 	
 	// Add tooltip text to node
 	selNodes.append("title")
-		.text((d) => ("Word: " + d.name  + ", Weight: " + d.weight))
+		.text((d) => (d.name  + " (weight: " + d.weight + ")"))
 		.style("fill", "#000000")
 		.style("font-family", "Calibri")
 		.style("font-size", "11pt");

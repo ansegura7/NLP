@@ -40,13 +40,13 @@
 				
 				<div class="divText" align="left">
 					<label for="inpThreshold">Threshold:</label>
-					<input id="inpThreshold" type="range" min="0.05" max="0.95" step="0.05" value="0.80" onchange="ast.changeThreshold()">
+					<input id="inpThreshold" type="range" min="0.95" max="0.99" step="0.01" value="0.99" onchange="ast.changeThreshold()">
 					<label id="inpLabel"></label>
 
 					<label for="cmbPalette" style="margin-left:30px;" >Palette:</label>
 					<select id="cmbPalette" onchange="ast.changePalette()">
-						<option>Oranges</option>
 						<option>Purples</option>
+						<option>Oranges</option>
 						<option>Reds</option>
 					</select>
 				</div>
