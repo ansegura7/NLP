@@ -79,8 +79,6 @@ ast.createNetwork = () => {
 			}
 		}
 	}
-	console.log(JSON.stringify(nodes));
-	console.log(JSON.stringify(links));
 
 	// Network variables
 	let xTitle = "";
