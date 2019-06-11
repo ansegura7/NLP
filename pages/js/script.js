@@ -62,23 +62,24 @@ ast.createNetwork = () => {
 
 	// Update data
 	let vocabulary = ast.data.columns;
+	let vocLength = vocabulary.length;
 	let nodes = [];
 	let links = [];
 
-	ast.data.forEach(function(row, i) {
-
-		Object.keys(row).forEach(function(n, j) {
+	for(j = 0; j < vocLength; j++) {
+		for(i = 0; i < vocLength; i++) {
 			let s = vocabulary[i];
 			let t = vocabulary[j];
 			let w = ast.data[i][t];
 
-			if (s != t && w >= ast.threshold) {
+			if (i != j && w >= ast.threshold) {
 				links.push({ source: s, target: t , weight: w });
 				util.addDictToJsonArray(nodes, s);
 				util.addDictToJsonArray(nodes, t);
 			}
-		});
-	});
+		}
+	}
+	console.log("nodes: " + nodes.length + ", edges: " + links.length) ;
 
 	// Network variables
 	let xTitle = "";
@@ -125,14 +126,13 @@ ast.doNetworkChart = (svg, nodes, links, cTitle, xTitle, yTitle) => {
 		.force("charge", d3.forceManyBody()
 			.strength(-50))
 		.force("x", d3.forceX(iwidth/2)
-			.strength(0.3))
-		.force("y", d3.forceY(iheight/2)
-			.strength(0.3))
-		.force("collide", d3.forceCollide(d => d.weight * 2 ))
+			.strength(0.4))
+		.force("y", d3.forceY(20 + iheight/2)
+			.strength(0.4))
+		.force("collide", d3.forceCollide((d) => d.weight))
 		.force("link", d3.forceLink(links)
 			.id((d) => d.name)
-			.distance(100)
-			.strength(1))
+			.distance((d) => (180 + d.weight)))
 		.on("tick", ticked);
 	
 	// Create adjacency matrix
@@ -209,7 +209,7 @@ ast.doNetworkChart = (svg, nodes, links, cTitle, xTitle, yTitle) => {
 	
 	// Add sub-title
 	g.append("text")
-		.attr("x", (iwidth - 95))
+		.attr("x", (iwidth - 105))
 		.attr("y", (iheight - 25))
 		.attr("dy", "1em")
 		.style("text-anchor", "middle")

@@ -20,6 +20,12 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 	<li>Export similarity between the words</li>
 </ul>
 </details>
+<summary>3. <a href="https://ansegura7.github.io/NLP/pages/NLP_Network.html" >Relationship between Words</a></summary>
+<ul>
+	<li>Networks and Force System</li>
+	<li>d3.js</li>
+</ul>
+</details>
 
 ## Data
 Books in plain text, both in English and Spanish.
