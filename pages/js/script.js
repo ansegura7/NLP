@@ -1,6 +1,6 @@
 // Init parameters
 var ast = {
-	"width": 1000, "height": 800, "threshold": 0.98, "max_weight": 0, "colorPalette": "Purples"
+	"width": 1000, "height": 800, "threshold": 0.98, "max_weight": 0, "theme": "Galaxy"
 }, util = {};
 
 // Init dynamic components
@@ -48,9 +48,9 @@ ast.changeThreshold = () => {
 	ast.createNetwork();
 }
 
-ast.changePalette = () => {
-	let cmbPalette = d3.select("#cmbPalette");
-	ast.colorPalette = cmbPalette.node().value;
+ast.changeTheme = () => {
+	let cmbTheme = d3.select("#cmbTheme");
+	ast.theme = cmbTheme.node().value;
 	
 	// Create the network	
 	ast.createNetwork();
@@ -73,13 +73,14 @@ ast.createNetwork = () => {
 			let w = ast.data[i][t];
 
 			if (i != j && w >= ast.threshold) {
-				links.push({ source: s, target: t , weight: w });
+				links.push({ source: s, target: t, weight: w });
 				util.addDictToJsonArray(nodes, s);
 				util.addDictToJsonArray(nodes, t);
 			}
 		}
 	}
-	console.log("nodes: " + nodes.length + ", edges: " + links.length) ;
+	console.log(JSON.stringify(nodes));
+	console.log(JSON.stringify(links));
 
 	// Network variables
 	let xTitle = "";
@@ -101,7 +102,7 @@ ast.doNetworkChart = (svg, nodes, links, cTitle, xTitle, yTitle) => {
 
 	// Chart variables
 	let adjlist = [];
-	let textColor = "#fff";
+	let textColor;
 
  	// Create scales
 	let w = d3.scaleLinear()
@@ -113,26 +114,30 @@ ast.doNetworkChart = (svg, nodes, links, cTitle, xTitle, yTitle) => {
 	
 	// Select interpolate function of color palette 
 	let colorFns;
-	if (ast.colorPalette == "Oranges")
-		colorFns = d3.interpolateOranges;
-	else if (ast.colorPalette == "Purples")
+	if (ast.theme == "Galaxy") {
+		textColor = "#fff"
+		svg.attr('style', "background-color: #000");
 		colorFns = d3.interpolatePurples;
-	else if (ast.colorPalette == "Reds")
-		colorFns = d3.interpolateReds;
+	}
+	else if (ast.theme == "Classic") {
+		textColor = "#000"
+		svg.attr('style', "background-color: #fff");
+		colorFns = d3.interpolateBlues;
+	}
 	
 	// Simulation Force system
 	let simulation = d3.forceSimulation(nodes);
 	simulation
 		.force("charge", d3.forceManyBody()
-			.strength(-50))
+			.strength(-40))
 		.force("x", d3.forceX(iwidth/2)
 			.strength(0.4))
-		.force("y", d3.forceY(20 + iheight/2)
+		.force("y", d3.forceY(30 + iheight/2)
 			.strength(0.4))
 		.force("collide", d3.forceCollide((d) => d.weight))
 		.force("link", d3.forceLink(links)
 			.id((d) => d.name)
-			.distance((d) => (180 + d.weight)))
+			.distance((d) => (200 + d.weight)))
 		.on("tick", ticked);
 	
 	// Create adjacency matrix
@@ -159,11 +164,11 @@ ast.doNetworkChart = (svg, nodes, links, cTitle, xTitle, yTitle) => {
 		.enter()
 		.append("g")
 		.attr("class", "node")
-		.attr("transform", (n) => "translate(" + xAvg + "," + yAvg + ")");
-		// .call(d3.drag()
-		// 	.on("start", dragstarted)
-		// 	.on("drag", dragged)
-		// 	.on("end", dragended));
+		.attr("transform", (n) => "translate(" + xAvg + "," + yAvg + ")")
+		.call(d3.drag()
+			.on("start", dragstarted)
+			.on("drag", dragged)
+			.on("end", dragended));
 	
 	// Add circle to node
 	selNodes.append("circle")
@@ -232,7 +237,7 @@ ast.doNetworkChart = (svg, nodes, links, cTitle, xTitle, yTitle) => {
 
 	function dragstarted(d) {
 		if (!d3.event.active)
-			simulation.alphaTarget(0.5).restart();
+			simulation.alphaTarget(0.3).restart();
 		d.fx = d.x;
 		d.fy = d.y;
 	}
