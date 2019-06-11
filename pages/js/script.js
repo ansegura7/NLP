@@ -1,6 +1,6 @@
 // Init parameters
 var ast = {
-	"width": 1000, "height": 800, "threshold": 0.98, "max_weight": 0, "theme": "Galaxy"
+	"width": 1000, "height": 800, "threshold": 0.98, "max_weight": 0, "theme": "Galaxy", "data": []
 }, util = {};
 
 // Init dynamic components
@@ -15,17 +15,11 @@ ast.init = () => {
 // Load dataW
 ast.loadData = () => {
 	let filepath = "https://raw.githubusercontent.com/ansegura7/NLP/master/data/network/";
-	let filename = filepath + "sparse_similarity.csv";
+	let filename = filepath + "links.json"
 
-	d3.csv(filename).then(
+	// Load Nodes
+	d3.json(filename).then(
 		function(rawdata) {
-
-			// Load data and apply quality process
-			rawdata.forEach((row, i) => {
-				Object.keys(row).forEach((word, j) => {
-					row[word] = +row[word];
-				})
-			});
 
 			// Save data and show network
 			ast.data = rawdata;
@@ -36,6 +30,7 @@ ast.loadData = () => {
 			console.log(error);
 		}
 	);
+	
 }
 
 /********** Begin Events Fundtions **********/
@@ -61,31 +56,23 @@ ast.changeTheme = () => {
 ast.createNetwork = () => {
 
 	// Update data
-	let vocabulary = ast.data.columns;
-	let vocLength = vocabulary.length;
 	let nodes = [];
 	let links = [];
 
-	for(j = 0; j < vocLength; j++) {
-		for(i = 0; i < vocLength; i++) {
-			let s = vocabulary[i];
-			let t = vocabulary[j];
-			let w = ast.data[i][t];
+	for (let i = 0; i < ast.data.length; i++) {
+		let edge = JSON.parse(JSON.stringify(ast.data[i]));
 
-			if (i != j && w >= ast.threshold) {
-				links.push({ source: s, target: t, weight: w });
-				util.addDictToJsonArray(nodes, s);
-				util.addDictToJsonArray(nodes, t);
-			}
+		if (edge.weight >= ast.threshold) {
+			links.push(edge);
+			util.addDictToJsonArray(nodes, edge.source);
+			util.addDictToJsonArray(nodes, edge.target);
 		}
 	}
 
 	// Network variables
-	let xTitle = "";
-	let yTitle = "";
 	let cTitle = "Force-Directed Words Graph";
 	let svgNetwork = d3.select("#svgNetwork1");
-	ast.doNetworkChart(svgNetwork, nodes, links, cTitle, xTitle, yTitle);
+	ast.doNetworkChart(svgNetwork, nodes, links, cTitle, "", "");
 }
 
 // Create Network diagram
