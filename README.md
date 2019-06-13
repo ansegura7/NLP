@@ -37,7 +37,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 </details>
 
 ## Data
-Books in plain text, both in English and Spanish.
+Books in plain text, both in English and Spanish. The enrichment of the entities is done from DBpedia.
 
 ## Python Dependencies
 ```
@@ -46,7 +46,7 @@ Books in plain text, both in English and Spanish.
     python -m spacy download es
     conda install -c anaconda gensim
     conda install -c conda-forge wordcloud
-	conda install -c conda-forge sparqlwrapper
+    conda install -c conda-forge sparqlwrapper
 ```
 
 ## Contributing and Feedback
