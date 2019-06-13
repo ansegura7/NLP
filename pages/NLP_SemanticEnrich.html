@@ -13136,7 +13136,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Semantic Enrichment</strong> refers in general terms to the technologies and practices used to add semantic metadata to content.</p>
 <p><strong><a href='https://en.wikipedia.org/wiki/SPARQL' target='_blank' >SPARQL</a></strong> is an RDF query language (a semantic query language for databases) able to retrieve and manipulate data stored in Resource Description Framework (RDF) format. It was made a standard by the RDF Data Access Working Group (DAWG) of the World Wide Web Consortium, and is recognized as one of the key technologies of the semantic web.</p>
-<p><strong><a href='https://wiki.dbpedia.org/' target='_blank' >DBpedia</a></strong> is a crowd-sourced community effort to extract structured content from the information created in various Wikimedia projects. This structured information resembles an open knowledge graph (OKG) which is available for everyone on the Web.</p>
+<p><strong><a href='https://wiki.dbpedia.org/about' target='_blank' >DBpedia</a></strong> is a crowd-sourced community effort to extract structured content from the information created in various Wikimedia projects. This structured information resembles an open knowledge graph (OKG) which is available for everyone on the Web.</p>
 
 </div>
 </div>
@@ -13150,6 +13150,7 @@ div#notebook {
 <li>Country</li>
 <li>Place</li>
 <li>Company</li>
+<li>Movie</li>
 </ul>
 
 </div>
@@ -13520,8 +13521,8 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Ask DBpedia for &#39;Linux&#39; company</span>
-<span class="n">city_name</span> <span class="o">=</span> <span class="s1">&#39;Linux&#39;</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">query_company</span><span class="p">(</span><span class="n">city_name</span><span class="p">)</span>
+<span class="n">company_name</span> <span class="o">=</span> <span class="s1">&#39;Linux&#39;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">query_company</span><span class="p">(</span><span class="n">company_name</span><span class="p">)</span>
 <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
@@ -13554,6 +13555,92 @@ div#notebook {
  &#39;description&#39;: {&#39;type&#39;: &#39;literal&#39;,
   &#39;xml:lang&#39;: &#39;de&#39;,
   &#39;value&#39;: &#39;Linux Game Publishing (kurz LGP) ist ein Software-Unternehmen mit Sitz in Nottingham, England, das darauf spezialisiert ist, Computerspiele nach Linux zu portieren.&#39;}}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Movie-or-Film">Movie or Film<a class="anchor-link" href="#Movie-or-Film">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Query in DBpedia the information associated with the movie</span>
+<span class="k">def</span> <span class="nf">query_movie</span><span class="p">(</span><span class="n">movie</span><span class="p">):</span>
+    <span class="n">company</span> <span class="o">=</span> <span class="n">get_clean_entity</span><span class="p">(</span><span class="n">movie</span><span class="p">)</span>
+    
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            SELECT (SAMPLE(?name) AS ?name) (SAMPLE(?movie) AS ?movie) (SAMPLE(?actor) AS ?actor)</span>
+<span class="s2">                   (SAMPLE(?director) AS ?director) (SAMPLE(?description) AS ?description)</span>
+<span class="s2">            WHERE {</span>
+<span class="s2">               ?movie rdf:type dbo:Film.</span>
+<span class="s2">               ?movie foaf:name ?name.</span>
+<span class="s2">               ?movie dbo:starring ?actor.</span>
+<span class="s2">               ?movie dbo:director ?director.</span>
+<span class="s2">               ?movie dbo:abstract ?description.</span>
+<span class="s2">               FILTER (?name like &quot;%&quot;&quot;&quot;</span><span class="o">+</span> <span class="n">movie</span> <span class="o">+</span><span class="s2">&quot;&quot;&quot;%&quot;^^xsd:char ).</span>
+<span class="s2">               FILTER (langMatches(lang(?description),&quot;en&quot;)).</span>
+<span class="s2">            }</span>
+<span class="s2">            GROUP BY ?movie ?actor</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Run query against DBpedia</span>
+    <span class="k">return</span> <span class="n">exec_sparql_query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Ask DBpedia for &#39;Linux&#39; company</span>
+<span class="n">movie_name</span> <span class="o">=</span> <span class="s1">&#39;John Wick&#39;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">query_movie</span><span class="p">(</span><span class="n">movie_name</span><span class="p">)</span>
+<span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;name&#39;: {&#39;type&#39;: &#39;literal&#39;,
+  &#39;xml:lang&#39;: &#39;en&#39;,
+  &#39;value&#39;: &#39;John Wick: Chapter 2&#39;},
+ &#39;movie&#39;: {&#39;type&#39;: &#39;uri&#39;,
+  &#39;value&#39;: &#39;http://dbpedia.org/resource/John_Wick:_Chapter_2&#39;},
+ &#39;actor&#39;: {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Keanu_Reeves&#39;},
+ &#39;director&#39;: {&#39;type&#39;: &#39;uri&#39;,
+  &#39;value&#39;: &#39;http://dbpedia.org/resource/Chad_Stahelski&#39;},
+ &#39;description&#39;: {&#39;type&#39;: &#39;literal&#39;,
+  &#39;xml:lang&#39;: &#39;en&#39;,
+  &#39;value&#39;: &#39;John Wick: Chapter 2 is an upcoming American action thriller film directed by Chad Stahelski and written by Derek Kolstad. It is a sequel to 2014 film John Wick. The film stars Keanu Reeves, Common, Bridget Moynahan, Ian McShane, and John Leguizamo. Principal photography began on October 26, 2015, in New York City and the film is set to be released on February 10, 2017.&#39;}}</pre>
 </div>
 
 </div>
