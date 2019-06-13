@@ -11,7 +11,15 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 </ul>
 </details>
 <details>
-<summary>2. <a href="https://ansegura7.github.io/NLP/pages/NLP_Word2Vec.html" >Word Embedding with Gensim</a></summary>
+<summary>2. <a href="https://ansegura7.github.io/NLP/pages/NLP_SemanticEnrich.html" >Semantic Enrichment of Entities</a></summary>
+<ul>
+	<li>Semantic Enrichment</li>
+	<li>SPARQL</li>
+	<li>DBpedia</li>
+</ul>
+</details>
+<details>
+<summary>3. <a href="https://ansegura7.github.io/NLP/pages/NLP_Word2Vec.html" >Word Embedding with Gensim</a></summary>
 <ul>
 	<li>Read natural text from a English book</li>
 	<li>Tokenize and remove Stopwords</li>
@@ -21,7 +29,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 </ul>
 </details>
 <details>
-<summary>3. <a href="https://ansegura7.github.io/NLP/pages/NLP_Network.html" >Relationship between Words</a></summary>
+<summary>4. <a href="https://ansegura7.github.io/NLP/pages/NLP_Network.html" >Relationship between Words</a></summary>
 <ul>
 	<li>Networks and Force System</li>
 	<li>d3.js</li>
@@ -38,6 +46,7 @@ Books in plain text, both in English and Spanish.
     python -m spacy download es
     conda install -c anaconda gensim
     conda install -c conda-forge wordcloud
+	conda install -c conda-forge sparqlwrapper
 ```
 
 ## Contributing and Feedback
