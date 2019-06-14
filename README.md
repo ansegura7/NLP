@@ -51,7 +51,7 @@ Books in plain text, both in English and Spanish. The enrichment of the entities
     conda install -c conda-forge spacy
     python -m spacy download en
     python -m spacy download es
-	conda install -c conda-forge sparqlwrapper
+    conda install -c conda-forge sparqlwrapper
     pip install pyspellchecker
     conda install -c anaconda gensim
     conda install -c conda-forge wordcloud
