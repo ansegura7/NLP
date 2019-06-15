@@ -13161,6 +13161,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load Python libraries</span>
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
 </pre></div>
 
     </div>
@@ -13198,6 +13199,29 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Return an array with the clean words of the document</span>
+<span class="k">def</span> <span class="nf">get_doc_words</span><span class="p">(</span><span class="n">plain_text</span><span class="p">):</span>
+    <span class="n">doc_words</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Cleaing the text</span>
+    <span class="n">clean_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^a-zA-Z]&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    
+    <span class="c1"># Tokenize sentences in words</span>
+    <span class="n">doc_words</span> <span class="o">=</span> <span class="n">clean_text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">doc_words</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get text sample</span>
 <span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;../data/en/Moby Dick or the Whale - Herman Melville.txt&quot;</span>
 <span class="n">plain_text</span> <span class="o">=</span> <span class="n">read_text_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
@@ -13214,7 +13238,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13231,47 +13255,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Return an array with the clean words of the document: vocabulary</span>
-<span class="k">def</span> <span class="nf">get_vocabulary</span><span class="p">(</span><span class="n">plain_text</span><span class="p">):</span>
-    <span class="n">vocabulary</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">doc_words</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="c1"># Cleaing the text</span>
-    <span class="n">clean_text</span> <span class="o">=</span> <span class="n">plain_text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="n">clean_text</span> <span class="o">=</span> <span class="n">clean_text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
-    <span class="n">clean_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^a-zA-Z.]&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">clean_text</span><span class="p">)</span>
-    <span class="n">clean_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">clean_text</span><span class="p">)</span>
-    <span class="n">clean_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\.+&#39;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">clean_text</span><span class="p">)</span>
-
-    <span class="c1"># Tokenize sentences in words</span>
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">clean_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">sentence</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
-                <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-                    <span class="n">doc_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-    
-    <span class="c1"># Get unique words from document</span>
-    <span class="n">vocabulary</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">doc_words</span><span class="p">))</span>
-    
-    <span class="k">return</span> <span class="n">vocabulary</span><span class="p">;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create vocabulary</span>
-<span class="n">vocabulary</span> <span class="o">=</span> <span class="n">get_vocabulary</span><span class="p">(</span><span class="n">plain_text</span><span class="p">)</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create document word list</span>
+<span class="n">doc_words</span> <span class="o">=</span> <span class="n">get_doc_words</span><span class="p">(</span><span class="n">plain_text</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">doc_words</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13290,7 +13279,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>16967</pre>
+<pre>219153</pre>
 </div>
 
 </div>
@@ -13305,7 +13294,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show 100 first words of the vocabulary</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13322,9 +13311,44 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;lists&#39;, &#39;enemy&#39;, &#39;unbegotten&#39;, &#39;strict&#39;, &#39;begging&#39;, &#39;hindmost&#39;, &#39;derive&#39;, &#39;judith&#39;, &#39;taken&#39;, &#39;uncracked&#39;, &#39;relinquish&#39;, &#39;slapped&#39;, &#39;resist&#39;, &#39;ceremonies&#39;, &#39;childish&#39;, &#39;sixteen&#39;, &#39;explain&#39;, &#39;tips&#39;, &#39;questionable&#39;, &#39;cabalistics&#39;, &#39;inquiry&#39;, &#39;yawed&#39;, &#39;community&#39;, &#39;changing&#39;, &#39;ensuing&#39;, &#39;actions&#39;, &#39;blubber&#39;, &#39;riveted&#39;, &#39;freedom&#39;, &#39;symbolized&#39;, &#39;placards&#39;, &#39;plates&#39;, &#39;lawful&#39;, &#39;horse&#39;, &#39;feathering&#39;, &#39;cable&#39;, &#39;transpired&#39;, &#39;froissart&#39;, &#39;abednego&#39;, &#39;arrive&#39;, &#39;lockers&#39;, &#39;watergate&#39;, &#39;snatching&#39;, &#39;composing&#39;, &#39;predicament&#39;, &#39;miguel&#39;, &#39;equator&#39;, &#39;voyagings&#39;, &#39;banterings&#39;, &#39;thereabouts&#39;, &#39;bellied&#39;, &#39;heavers&#39;, &#39;faded&#39;, &#39;canopy&#39;, &#39;revolvingly&#39;, &#39;reason&#39;, &#39;subdivisible&#39;, &#39;animosity&#39;, &#39;disclosed&#39;, &#39;trace&#39;, &#39;abroad&#39;, &#39;swallowed&#39;, &#39;chinks&#39;, &#39;surrender&#39;, &#39;bag&#39;, &#39;wondering&#39;, &#39;twine&#39;, &#39;echoed&#39;, &#39;noah&#39;, &#39;guilt&#39;, &#39;leaking&#39;, &#39;such&#39;, &#39;fish&#39;, &#39;anglo&#39;, &#39;dearest&#39;, &#39;nimbly&#39;, &#39;scornest&#39;, &#39;quaffed&#39;, &#39;twopence&#39;, &#39;errors&#39;, &#39;colourless&#39;, &#39;lay&#39;, &#39;drawing&#39;, &#39;stratagem&#39;, &#39;owners&#39;, &#39;continue&#39;, &#39;beggar&#39;, &#39;retaken&#39;, &#39;daughters&#39;, &#39;tending&#39;, &#39;hurt&#39;, &#39;glimmering&#39;, &#39;savage&#39;, &#39;other&#39;, &#39;accursed&#39;, &#39;gem&#39;, &#39;nelson&#39;, &#39;tinker&#39;, &#39;investigate&#39;, &#39;sagacious&#39;]
+<pre>[&#39;the&#39;, &#39;project&#39;, &#39;gutenberg&#39;, &#39;ebook&#39;, &#39;of&#39;, &#39;moby&#39;, &#39;dick&#39;, &#39;or&#39;, &#39;the&#39;, &#39;whale&#39;, &#39;by&#39;, &#39;herman&#39;, &#39;melville&#39;, &#39;this&#39;, &#39;ebook&#39;, &#39;is&#39;, &#39;for&#39;, &#39;the&#39;, &#39;use&#39;, &#39;of&#39;, &#39;anyone&#39;, &#39;anywhere&#39;, &#39;at&#39;, &#39;no&#39;, &#39;cost&#39;, &#39;and&#39;, &#39;with&#39;, &#39;almost&#39;, &#39;no&#39;, &#39;restrictions&#39;, &#39;whatsoever&#39;, &#39;you&#39;, &#39;may&#39;, &#39;copy&#39;, &#39;it&#39;, &#39;give&#39;, &#39;it&#39;, &#39;away&#39;, &#39;or&#39;, &#39;re&#39;, &#39;use&#39;, &#39;it&#39;, &#39;under&#39;, &#39;the&#39;, &#39;terms&#39;, &#39;of&#39;, &#39;the&#39;, &#39;project&#39;, &#39;gutenberg&#39;, &#39;license&#39;, &#39;included&#39;, &#39;with&#39;, &#39;this&#39;, &#39;ebook&#39;, &#39;or&#39;, &#39;online&#39;, &#39;at&#39;, &#39;www&#39;, &#39;gutenberg&#39;, &#39;org&#39;, &#39;title&#39;, &#39;moby&#39;, &#39;dick&#39;, &#39;or&#39;, &#39;the&#39;, &#39;whale&#39;, &#39;author&#39;, &#39;herman&#39;, &#39;melville&#39;, &#39;release&#39;, &#39;date&#39;, &#39;december&#39;, &#39;ebook&#39;, &#39;last&#39;, &#39;updated&#39;, &#39;december&#39;, &#39;language&#39;, &#39;english&#39;, &#39;character&#39;, &#39;set&#39;, &#39;encoding&#39;, &#39;utf&#39;, &#39;start&#39;, &#39;of&#39;, &#39;this&#39;, &#39;project&#39;, &#39;gutenberg&#39;, &#39;ebook&#39;, &#39;moby&#39;, &#39;dick&#39;, &#39;or&#39;, &#39;the&#39;, &#39;whale&#39;, &#39;produced&#39;, &#39;by&#39;, &#39;daniel&#39;, &#39;lazarus&#39;, &#39;jonesey&#39;, &#39;and&#39;, &#39;david&#39;]
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create term frequency list of the document words</span>
+<span class="n">term_freq</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">doc_words</span><span class="p">)</span>
+<span class="n">term_freq</span><span class="p">[</span><span class="s1">&#39;the&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[7]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>14542</pre>
+</div>
+
 </div>
 
 </div>
@@ -13348,25 +13372,24 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define Spell Checker class</span>
 <span class="k">class</span> <span class="nc">SpellChecker</span><span class="p">:</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_freq</span><span class="p">):</span>
         <span class="s2">&quot;Constructor.&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w_rank</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">letters</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
         
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">w_rank</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">term_freq</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">term_freq</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w_rank</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="n">term_freq</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">/</span> <span class="n">N</span>
     
     <span class="k">def</span> <span class="nf">P</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span> 
         <span class="s2">&quot;Probability of &#39;word&#39;.&quot;</span>
-        <span class="c1"># use inverse of rank as proxy</span>
-        <span class="c1"># returns 0 if the word isn&#39;t in the dictionary</span>
-        <span class="k">return</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_rank</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_rank</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">known</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span> 
         <span class="s2">&quot;The subset of &#39;words&#39; that appear in the dictionary of w_rank.&quot;</span>
@@ -13409,11 +13432,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create model</span>
-<span class="n">sp_model</span> <span class="o">=</span> <span class="n">SpellChecker</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+<span class="n">sp_model</span> <span class="o">=</span> <span class="n">SpellChecker</span><span class="p">(</span><span class="n">term_freq</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13423,10 +13446,112 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Correction</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get probability of the word &#39;the&#39;</span>
+<span class="n">sp_model</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="s1">&#39;the&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[10]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.06635546855393264</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get probability of the word &#39;unmentioned&#39;</span>
+<span class="n">sp_model</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="s1">&#39;unmentioned&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[11]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get words that exist in the dictionary</span>
+<span class="n">sp_model</span><span class="o">.</span><span class="n">known</span><span class="p">([</span><span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;unmentioned&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[12]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;the&#39;}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the correction for word &#39;castli&#39;</span>
 <span class="n">sp_model</span><span class="o">.</span><span class="n">correction</span><span class="p">(</span><span class="s1">&#39;castli&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -13440,7 +13565,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[13]:</div>
 
 
 
@@ -13457,10 +13582,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get candidates</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get candidates for word &#39;wlak&#39;</span>
 <span class="n">sp_model</span><span class="o">.</span><span class="n">candidates</span><span class="p">(</span><span class="s1">&#39;wlak&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -13474,7 +13599,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -13507,7 +13632,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load Python libraries</span>
@@ -13528,7 +13653,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create English model</span>
@@ -13542,7 +13667,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Default Levenshtein distance</span>
@@ -13559,7 +13684,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -13576,7 +13701,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Find those words that may be misspelled</span>
@@ -13594,7 +13719,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -13611,7 +13736,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the one &#39;most likely&#39; answer and options</span>
@@ -13634,9 +13759,9 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;word&#39;: &#39;castli&#39;, &#39;answer&#39;: &#39;castle&#39;, &#39;options&#39;: {&#39;castle&#39;}}
-{&#39;word&#39;: &#39;livis&#39;, &#39;answer&#39;: &#39;lives&#39;, &#39;options&#39;: {&#39;livid&#39;, &#39;levis&#39;, &#39;divis&#39;, &#39;livia&#39;, &#39;lives&#39;}}
-{&#39;word&#39;: &#39;beaotipul&#39;, &#39;answer&#39;: &#39;beautiful&#39;, &#39;options&#39;: {&#39;beautiful&#39;}}
+<pre>{&#39;word&#39;: &#39;beaotipul&#39;, &#39;answer&#39;: &#39;beautiful&#39;, &#39;options&#39;: {&#39;beautiful&#39;}}
+{&#39;word&#39;: &#39;livis&#39;, &#39;answer&#39;: &#39;lives&#39;, &#39;options&#39;: {&#39;levis&#39;, &#39;lives&#39;, &#39;divis&#39;, &#39;livid&#39;, &#39;livia&#39;}}
+{&#39;word&#39;: &#39;castli&#39;, &#39;answer&#39;: &#39;castle&#39;, &#39;options&#39;: {&#39;castle&#39;}}
 </pre>
 </div>
 </div>
@@ -13654,7 +13779,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create Spanish model</span>
@@ -13668,7 +13793,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Find those words that may be misspelled</span>
@@ -13686,7 +13811,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[21]:</div>
 
 
 
@@ -13703,7 +13828,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the one &#39;most likely&#39; answer and options</span>
@@ -13727,7 +13852,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>{&#39;word&#39;: &#39;errodes&#39;, &#39;answer&#39;: &#39;errores&#39;, &#39;options&#39;: {&#39;errores&#39;}}
-{&#39;word&#39;: &#39;frace&#39;, &#39;answer&#39;: &#39;grace&#39;, &#39;options&#39;: {&#39;face&#39;, &#39;race&#39;, &#39;frac&#39;, &#39;frane&#39;, &#39;frase&#39;, &#39;france&#39;, &#39;trace&#39;, &#39;brace&#39;, &#39;frame&#39;, &#39;grace&#39;}}
+{&#39;word&#39;: &#39;frace&#39;, &#39;answer&#39;: &#39;grace&#39;, &#39;options&#39;: {&#39;race&#39;, &#39;france&#39;, &#39;trace&#39;, &#39;grace&#39;, &#39;face&#39;, &#39;brace&#39;, &#39;frase&#39;, &#39;frac&#39;, &#39;frame&#39;, &#39;frane&#39;}}
 </pre>
 </div>
 </div>
