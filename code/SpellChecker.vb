@@ -1,10 +1,8 @@
-Imports Microsoft.VisualBasic
-
 ' SpellChecker class: based on Peter Norvig’s 21-line spelling corrector using probability theory
 Public Class SpellChecker
     Private Const LETTERS As String = "abcdefghijklmnopqrstuvwxyz"
     Private wordRank As New Dictionary(Of String, Double)
-    Private stpw As Stopwatch = Stopwatch.StartNew
+    Private stpw As New System.Diagnostics.Stopwatch()
 
     ' Constructor
     Public Sub New(vocabulary As Dictionary(Of String, Integer))
@@ -37,9 +35,9 @@ Public Class SpellChecker
     End Function
 
     ' Probability of 'word'
-    Public Function Probability(word As String)
-        Dim p As Integer = 0
-
+    Public Function Probability(word As String) As Double
+        Dim p As Double = 0.0
+        
         If wordRank.ContainsKey(word) Then
             p = wordRank.Item(word)
         End If
@@ -138,12 +136,12 @@ Public Class SpellChecker
     ' Most probable spelling correction for word
     Public Function Correction(options As List(Of String)) As String
         Dim answer As String = ""
-        Dim currP As Integer = 0
-        Dim maxP As Integer = 0
-
+        Dim currP As Double = 0.0
+        Dim maxP As Double = 0.0
+        
         For i As Integer = 0 To options.Count - 1
             currP = Probability(options(i))
-
+            
             If currP > maxP Then
                 maxP = currP
                 answer = options(i)
