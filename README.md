@@ -5,7 +5,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 <details open>
 <summary>1. <a href="https://ansegura7.github.io/NLP/pages/NLP_SpaCy.html" >NLP with spaCy</a></summary>
 <ul>
-	<li>Read natural text from a Spanish book</li>
+	<li>Read natural text of a book in Spanish</li>
 	<li>Create a NLP model with spaCy</li>
 	<li>Working with POS, NES and sentences</li>
 </ul>
@@ -28,7 +28,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 <details>
 <summary>4. <a href="https://ansegura7.github.io/NLP/pages/NLP_Word2Vec.html" >Word Embedding with Gensim</a></summary>
 <ul>
-	<li>Read natural text from a English book</li>
+	<li>Read natural text of a book in English</li>
 	<li>Tokenize and remove Stopwords</li>
 	<li>Create a Word2Vec model</li>
 	<li>Plot similars words</li>
@@ -68,4 +68,4 @@ Any kind of feedback/criticism would be greatly appreciated (algorithm design, d
 This project is licensed under the terms of the MIT license.
 
 ## Acknowledgments
-I would like to show my gratitude to http://www.gutenberg.org.
+I would like to show my gratitude to http://www.gutenberg.org for the books in English and to Peter Norvig for the algorithm of the spell checker.
