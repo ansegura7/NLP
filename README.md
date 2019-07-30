@@ -1,4 +1,4 @@
-# NLP
+# Natural Language Processing
 Natural Language Processing project with Python frameworks. NLP is a discipline where computer science, artificial intelligence and cognitive logic are intercepted, with the objective that machines can read and understand our language for decision making.
 
 ![NLP Header](https://raw.githubusercontent.com/ansegura7/NLP/master/image/header.jpg)
