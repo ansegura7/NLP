@@ -49,7 +49,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 Books in plain text, both in English and Spanish. The enrichment of the entities is done from DBpedia.
 
 ## Python Dependencies
-```
+``` console
     conda install -c conda-forge spacy
     python -m spacy download en
     python -m spacy download es
