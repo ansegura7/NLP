@@ -12,7 +12,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 	<li>Working with POS, NES and sentences</li>
 </ul>
 </details>
-<details>
+<details open>
 <summary>2. <a href="https://ansegura7.github.io/NLP/pages/NLP_SemanticEnrich.html" >Semantic Enrichment of Entities</a></summary>
 <ul>
 	<li>Semantic Enrichment</li>
@@ -20,14 +20,14 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 	<li>DBpedia</li>
 </ul>
 </details>
-<details>
+<details open>
 <summary>3. <a href="https://ansegura7.github.io/NLP/pages/NLP_SpellChecker.html" >Spell Checker/Corrector</a></summary>
 <ul>
 	<li>Spell Checker from scratch</li>
 	<li>Spell Checker using PySpellChecker class</li>
 </ul>
 </details>
-<details>
+<details open>
 <summary>4. <a href="https://ansegura7.github.io/NLP/pages/NLP_Word2Vec.html" >Word Embedding with Gensim</a></summary>
 <ul>
 	<li>Read natural text of a book in English</li>
@@ -37,7 +37,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 	<li>Export similarity between the words</li>
 </ul>
 </details>
-<details>
+<details open>
 <summary>5. <a href="https://ansegura7.github.io/NLP/pages/NLP_Network.html" >Relationship between Words</a></summary>
 <ul>
 	<li>Networks and Force System</li>
@@ -70,4 +70,4 @@ Any kind of feedback/criticism would be greatly appreciated (algorithm design, d
 This project is licensed under the terms of the MIT license.
 
 ## Acknowledgments
-I would like to show my gratitude to http://www.gutenberg.org for the books in English and to Peter Norvig for the algorithm of the spell checker.
+I would like to show my gratitude to <a href="http://www.gutenberg.org" target="_blank">Project Gutenberg</a> for the books in English and to Peter Norvig for the algorithm of the spell checker.
