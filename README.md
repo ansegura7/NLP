@@ -70,4 +70,4 @@ Any kind of feedback/criticism would be greatly appreciated (algorithm design, d
 This project is licensed under the terms of the MIT license.
 
 ## Acknowledgments
-I would like to show my gratitude to <a href="http://www.gutenberg.org" target="_blank">Project Gutenberg</a> for the books in English and to Peter Norvig for the algorithm of the spell checker.
+I would like to show my gratitude to <a href="http://www.gutenberg.org" target="_blank">Project Gutenberg</a> for the books in English and to Peter Norvig for the spell checker algorithm.
