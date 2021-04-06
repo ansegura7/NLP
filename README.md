@@ -51,20 +51,25 @@ Books in plain text, both in English and Spanish. The enrichment of the entities
 ## Python Dependencies
 ``` console
     conda install -c conda-forge spacy
-    python -m spacy download en
-    python -m spacy download es
+    python -m spacy download en_core_web_sm
+    python -m spacy download es_core_news_sm
     conda install -c conda-forge sparqlwrapper
     pip install pyspellchecker
     conda install -c anaconda gensim
     conda install -c conda-forge wordcloud
 ```
 
+## Software Version
+- Python 3.8.5
+- spaCy 3.0.5
+
 ## Contributing and Feedback
 Any kind of feedback/criticism would be greatly appreciated (algorithm design, documentation, improvement ideas, spelling mistakes, etc...).
 
-## Authors
+## Author
 - Created by Andrés Segura Tinoco
 - Created on June 04, 2019
+- Updated on Apr 06, 2021
 
 ## License
 This project is licensed under the terms of the MIT license.
