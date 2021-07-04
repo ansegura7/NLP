@@ -1,4 +1,19 @@
-# Natural Language Processing
+# NLP Course
+![version](https://img.shields.io/badge/version-Pro-blue)
+![release](https://img.shields.io/badge/release-1.0.0-blue)
+![language](https://img.shields.io/badge/language-Python_3.7%7C3.8-brightgreen)
+![last-update](https://img.shields.io/badge/last_update-07/04/2021-orange)
+![last-update](https://img.shields.io/badge/license-MIT-orange)
+
+Free hands-on course with the implementation (in Python) and description of several Natural Language Processing (NLP) algorithms and techniques.
+
+Although it is not intended to have the formal rigor of a book, we tried to be as faithful as possible to the original algorithms and methods, only adding variants, when these were necessary for didactic purposes.
+
+## Quick Start
+If you want to play with these notebooks online without having to install any library or configure hardware, you can use the following service:
+- <a href="https://colab.research.google.com/github/ansegura7/NLP/blob/master/" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+## What is NLP?
 Natural Language Processing project with Python frameworks. NLP is a discipline where computer science, artificial intelligence and cognitive logic are intercepted, with the objective that machines can read and understand our language for decision making.
 
 ![NLP Header](https://raw.githubusercontent.com/ansegura7/NLP/master/image/header.jpg)
@@ -64,12 +79,12 @@ Books in plain text, both in English and Spanish. The enrichment of the entities
 - spaCy 3.0.5
 
 ## Contributing and Feedback
-Any kind of feedback/criticism would be greatly appreciated (algorithm design, documentation, improvement ideas, spelling mistakes, etc...).
+Any kind of feedback/suggestions would be greatly appreciated (algorithm design, documentation, improvement ideas, spelling mistakes, etc...). If you want to make a contribution to the course you can do it through a PR.
 
 ## Author
 - Created by Andrés Segura Tinoco
 - Created on June 04, 2019
-- Updated on Apr 06, 2021
+- Updated on July 04, 2021
 
 ## License
 This project is licensed under the terms of the MIT license.
