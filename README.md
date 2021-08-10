@@ -1,8 +1,8 @@
 # NLP Course
 ![version](https://img.shields.io/badge/version-Pro-blue)
-![release](https://img.shields.io/badge/release-1.0.1-blue)
+![release](https://img.shields.io/badge/release-1.0.2-blue)
 ![language](https://img.shields.io/badge/language-Python_3.7%7C3.8-brightgreen)
-![last-update](https://img.shields.io/badge/last_update-07/11/2021-orange)
+![last-update](https://img.shields.io/badge/last_update-08/10/2021-orange)
 ![last-update](https://img.shields.io/badge/license-MIT-orange)
 
 Free hands-on course with the implementation (in Python) and description of several Natural Language Processing (NLP) algorithms and techniques.
@@ -86,10 +86,10 @@ Any kind of feedback/suggestions would be greatly appreciated (algorithm design,
 ## Author
 - Created by Andrés Segura Tinoco
 - Created on June 04, 2019
-- Updated on July 11, 2021
+- Updated on Aug 10, 2021
 
 ## License
-This project is licensed under the terms of the MIT license.
+This project is licensed under the terms of the <a href="https://github.com/ansegura7/NLP/blob/master/LICENSE">MIT license</a>.
 
 ## Acknowledgments
 I would like to thank <a href="http://www.gutenberg.org" target="_blank" >Project Gutenberg</a> for sharing the books in English and <a href="https://norvig.com/" target="_blank" >Peter Norvig</a> for the spell checker algorithm.
