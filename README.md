@@ -2,7 +2,7 @@
 ![version](https://img.shields.io/badge/version-Pro-blue)
 ![release](https://img.shields.io/badge/release-1.0.2-blue)
 ![language](https://img.shields.io/badge/language-Python_3.7%7C3.8-brightgreen)
-![last-update](https://img.shields.io/badge/last_update-08/10/2021-orange)
+![last-update](https://img.shields.io/badge/last_update-08/11/2021-orange)
 ![last-update](https://img.shields.io/badge/license-MIT-orange)
 
 Free hands-on course with the implementation (in Python) and description of several Natural Language Processing (NLP) algorithms and techniques.
@@ -20,7 +20,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 
 ![NLP Header](https://raw.githubusercontent.com/ansegura7/NLP/master/image/header.jpg)
 
-## Content
+## Contents
 <details open>
 <summary>1. <a href="https://ansegura7.github.io/NLP/pages/NLP_SpaCy.html" >NLP with spaCy</a></summary>
 <ul>
@@ -86,7 +86,6 @@ Any kind of feedback/suggestions would be greatly appreciated (algorithm design,
 ## Author
 - Created by Andrés Segura Tinoco
 - Created on June 04, 2019
-- Updated on Aug 10, 2021
 
 ## License
 This project is licensed under the terms of the <a href="https://github.com/ansegura7/NLP/blob/master/LICENSE">MIT license</a>.
