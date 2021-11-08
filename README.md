@@ -1,8 +1,8 @@
 # NLP Course
 ![version](https://img.shields.io/badge/version-Pro-blue)
-![release](https://img.shields.io/badge/release-1.0.2-blue)
+![release](https://img.shields.io/badge/release-1.0.3-blue)
 ![language](https://img.shields.io/badge/language-Python_3.7%7C3.8-brightgreen)
-![last-update](https://img.shields.io/badge/last_update-08/11/2021-orange)
+![last-update](https://img.shields.io/badge/last_update-11/08/2021-orange)
 ![last-update](https://img.shields.io/badge/license-MIT-orange)
 
 Free hands-on course with the implementation (in Python) and description of several Natural Language Processing (NLP) algorithms and techniques.
@@ -49,7 +49,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 <ul>
 	<li>Read natural text of a book in English</li>
 	<li>Tokenize and remove Stopwords</li>
-	<li>Create a Word2Vec model</li>
+	<li>Create a Word2Vec model (CBOW)</li>
 	<li>Plot similars words</li>
 	<li>Export similarity between the words</li>
 </ul>
@@ -79,6 +79,7 @@ Books in plain text, both in English and Spanish. The enrichment of the entities
 ## Software Version
 - Python 3.8.5
 - spaCy 3.0.5
+- Gensim 4.0.1
 
 ## Contributing and Feedback
 Any kind of feedback/suggestions would be greatly appreciated (algorithm design, documentation, improvement ideas, spelling mistakes, etc...). If you want to make a contribution to the course you can do it through a PR.
