@@ -1,11 +1,11 @@
 # NLP Course
 ![version](https://img.shields.io/badge/version-Pro-blue)
-![release](https://img.shields.io/badge/release-1.0.3-blue)
+![release](https://img.shields.io/badge/release-1.1.0-blue)
 ![language](https://img.shields.io/badge/language-Python_3.7%7C3.8-brightgreen)
-![last-update](https://img.shields.io/badge/last_update-11/08/2021-orange)
+![last-update](https://img.shields.io/badge/last_update-1/21/2022-orange)
 ![last-update](https://img.shields.io/badge/license-MIT-orange)
 
-Free hands-on course with the implementation (in Python) and description of several Natural Language Processing (NLP) algorithms and techniques.
+Free hands-on course with the implementation (in Python) and description of several Natural Language Processing (NLP) algorithms and techniques, on several modern platforms and libraries.
 
 Although it is not intended to have the formal rigor of a book, we tried to be as faithful as possible to the original algorithms and methods, only adding variants, when these were necessary for didactic purposes.
 
@@ -26,13 +26,13 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 <ul>
 	<li>Read natural text of a book in Spanish</li>
 	<li>Create a NLP model with spaCy</li>
-	<li>Working with POS, NES and sentences</li>
+	<li>Working with POS, NER and sentences</li>
 </ul>
 </details>
 <details open>
 <summary>2. <a href="https://ansegura7.github.io/NLP/pages/NLP_SemanticEnrich.html" >Semantic Enrichment of Entities</a></summary>
 <ul>
-	<li>Semantic Enrichment</li>
+	<li>Semantic enrichment</li>
 	<li>SPARQL</li>
 	<li>DBpedia</li>
 </ul>
@@ -48,7 +48,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 <summary>4. <a href="https://ansegura7.github.io/NLP/pages/NLP_Word2Vec.html" >Word Embedding with Gensim</a></summary>
 <ul>
 	<li>Read natural text of a book in English</li>
-	<li>Tokenize and remove Stopwords</li>
+	<li>Tokenize and remove stopwords</li>
 	<li>Create a Word2Vec model (CBOW)</li>
 	<li>Plot similars words</li>
 	<li>Export similarity between the words</li>
@@ -57,8 +57,15 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 <details open>
 <summary>5. <a href="https://ansegura7.github.io/NLP/pages/NLP_Network.html" >Relationship between Words</a></summary>
 <ul>
-	<li>Networks and Force System</li>
+	<li>Networks and force system</li>
 	<li>d3.js</li>
+</ul>
+</details>
+<details open>
+<summary>6. <a href="https://ansegura7.github.io/NLP/pages/NLP_Stanza.html" >Stanza - Stanford CoreNLP</a></summary>
+<ul>
+	<li>Stanza text processing</li>
+	<li>Stanford CoreNLP interface</li>
 </ul>
 </details>
 
@@ -74,12 +81,14 @@ Books in plain text, both in English and Spanish. The enrichment of the entities
     pip install pyspellchecker
     conda install -c anaconda gensim
     conda install -c conda-forge wordcloud
+	conda install -c conda-forge stanza
 ```
 
 ## Software Version
 - Python 3.8.5
 - spaCy 3.0.5
 - Gensim 4.0.1
+- Stanza 1.2.3
 
 ## Contributing and Feedback
 Any kind of feedback/suggestions would be greatly appreciated (algorithm design, documentation, improvement ideas, spelling mistakes, etc...). If you want to make a contribution to the course you can do it through a PR.
