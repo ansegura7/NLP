@@ -1,8 +1,8 @@
-# NLP Course
+# Introduction to NLP Course
 ![version](https://img.shields.io/badge/version-Pro-blue)
 ![release](https://img.shields.io/badge/release-1.1.0-blue)
 ![language](https://img.shields.io/badge/language-Python_3.7%7C3.8-brightgreen)
-![last-update](https://img.shields.io/badge/last_update-1/21/2022-orange)
+![last-update](https://img.shields.io/badge/last_update-1/24/2022-orange)
 ![last-update](https://img.shields.io/badge/license-MIT-orange)
 
 Free hands-on course with the implementation (in Python) and description of several Natural Language Processing (NLP) algorithms and techniques, on several modern platforms and libraries.
@@ -62,7 +62,7 @@ Natural Language Processing project with Python frameworks. NLP is a discipline 
 </ul>
 </details>
 <details open>
-<summary>6. <a href="https://ansegura7.github.io/NLP/pages/NLP_Stanza.html" >Stanza - Stanford CoreNLP</a></summary>
+<summary>6. <a href="https://ansegura7.github.io/NLP/pages/NLP_Stanza.html" >Introduction to Stanza (Stanford CoreNLP)</a></summary>
 <ul>
 	<li>Stanza text processing</li>
 	<li>Stanford CoreNLP interface</li>
