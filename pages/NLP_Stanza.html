@@ -13979,7 +13979,7 @@ a.anchor-link {
 <ul>
 <li><strong>Created by Andrés Segura Tinoco</strong></li>
 <li><strong>Created on January 21, 2022</strong></li>
-<li><strong>Updated on January 21, 2022</strong></li>
+<li><strong>Updated on January 24, 2022</strong></li>
 </ul>
 
 </div>
@@ -14050,7 +14050,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The following is a set of English sentences from Chapter 1 (A SCANDAL IN BOHEMIA) of the book The Adventures of Sherlock Holmes by Sr. Arthur Conan Doyle.</p>
+<p>The following is a set of English sentences from Chapter 1 ("A SCANDAL IN BOHEMIA") of the book The Adventures of Sherlock Holmes by Sr. Arthur Conan Doyle.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14148,7 +14148,7 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>2022-01-20 13:46:03 INFO: Loading these models for language: en (English):
+<pre>2022-01-24 11:04:59 INFO: Loading these models for language: en (English):
 =========================
 | Processor | Package   |
 -------------------------
@@ -14160,9 +14160,9 @@ a.anchor-link {
 | ner       | ontonotes |
 =========================
 
-2022-01-20 13:46:03 INFO: Use device: cpu
-2022-01-20 13:46:03 INFO: Loading: tokenize
-2022-01-20 13:46:03 INFO: Loading: pos
+2022-01-24 11:04:59 INFO: Use device: cpu
+2022-01-24 11:04:59 INFO: Loading: tokenize
+2022-01-24 11:04:59 INFO: Loading: pos
 </pre>
 </div>
 </div>
@@ -14186,11 +14186,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>2022-01-20 13:46:03 INFO: Loading: lemma
-2022-01-20 13:46:03 INFO: Loading: depparse
-2022-01-20 13:46:03 INFO: Loading: sentiment
-2022-01-20 13:46:04 INFO: Loading: ner
-2022-01-20 13:46:05 INFO: Done loading processors!
+<pre>2022-01-24 11:05:00 INFO: Loading: lemma
+2022-01-24 11:05:00 INFO: Loading: depparse
+2022-01-24 11:05:01 INFO: Loading: sentiment
+2022-01-24 11:05:01 INFO: Loading: ner
+2022-01-24 11:05:03 INFO: Done loading processors!
 </pre>
 </div>
 </div>
@@ -14244,9 +14244,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>NLP task</strong>: Splitting Sentences. Show number of sentences in the text.</li>
-</ul>
+<p><strong>NLP task</strong>: Splitting Sentences. Show number of sentences in the text.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14287,9 +14285,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>NLP task</strong>: Part of Speech tagging. Show annotations on the words of the sentences.</li>
-</ul>
+<p><strong>NLP task</strong>: Part of Speech tagging. Show annotations on the words of the sentences.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14391,9 +14387,7 @@ Adler       	Adler       	PROPN 	13	flat
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>NLP task</strong>: Named Entity Recognition. </li>
-</ul>
+<p><strong>NLP task</strong>: Named Entity Recognition.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14568,7 +14562,7 @@ Irene Adler	PERSON	223-234
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>2022-01-20 13:46:06 INFO: Writing properties to tmp file: corenlp_server-3bb4c7d5e0654bfe.props
+<pre>2022-01-24 11:05:04 INFO: Writing properties to tmp file: corenlp_server-aaf3dd7c793a4b29.props
 </pre>
 </div>
 </div>
@@ -14605,7 +14599,7 @@ Irene Adler	PERSON	223-234
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>2022-01-20 13:46:06 INFO: Starting server with command: java -Xmx2G -cp C:\Dev Projects\Libraries\stanford-corenlp-4.3.1\* edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9001 -timeout 60000 -threads 5 -maxCharLength 100000 -quiet False -serverProperties corenlp_server-3bb4c7d5e0654bfe.props -annotators tokenize,ssplit,pos,lemma,ner,parse,depparse,coref -preload -outputFormat serialized
+<pre>2022-01-24 11:05:04 INFO: Starting server with command: java -Xmx2G -cp C:\Dev Projects\Libraries\stanford-corenlp-4.3.1\* edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9001 -timeout 60000 -threads 5 -maxCharLength 100000 -quiet False -serverProperties corenlp_server-aaf3dd7c793a4b29.props -annotators tokenize,ssplit,pos,lemma,ner,parse,depparse,coref -preload -outputFormat serialized
 </pre>
 </div>
 </div>
@@ -14642,8 +14636,8 @@ Irene Adler	PERSON	223-234
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>java.exe                      1104 Console                    2      7,264 K
-java.exe                     10296 Console                    2  1,356,824 K
+<pre>java.exe                     12944 Console                    3      7,292 K
+java.exe                     12192 Console                    3  1,024,520 K
 </pre>
 </div>
 </div>
@@ -14840,9 +14834,7 @@ he                            	PERSON
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><strong>NLP task</strong>: Constituency parse tree.</li>
-</ul>
+<p><strong>NLP task</strong>: Constituency Parse Tree.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -15008,7 +15000,7 @@ score: -72.68036651611328
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>java.exe                     10296 Console                    2  2,325,844 K
+<pre>java.exe                     12192 Console                    3  2,294,324 K
 </pre>
 </div>
 </div>
