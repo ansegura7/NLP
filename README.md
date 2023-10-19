@@ -2,7 +2,7 @@
 ![version](https://img.shields.io/badge/version-Pro-blue)
 ![release](https://img.shields.io/badge/release-1.1.0-blue)
 ![language](https://img.shields.io/badge/language-Python_3.7%7C3.8-brightgreen)
-![last-update](https://img.shields.io/badge/last_update-1/24/2022-orange)
+![last-update](https://img.shields.io/badge/last_update-10/19/2023-orange)
 ![last-update](https://img.shields.io/badge/license-MIT-orange)
 
 Free hands-on course with the implementation (in Python) and description of several Natural Language Processing (NLP) algorithms and techniques, on several modern platforms and libraries.
@@ -13,7 +13,7 @@ Although it is not intended to have the formal rigor of a book, we tried to be a
 The best way to get the most out of this course is to carefully read each selected problem, try to think of a possible solution (language independent) and then look at the proposed Python code and try to reproduce it in your favorite IDE. If you already have knowledge of the Python language, then you can go directly to programming your solution and then compare it with the one proposed in the course.
 
 If you want to play with these notebooks online without having to install any library or configure hardware, you can use the following service:
-- <a href="https://colab.research.google.com/github/ansegura7/NLP/blob/master/" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+- <a href="https://colab.research.google.com/github/ansegura7/NLP/blob/main/" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ## What is NLP?
 Natural Language Processing project with Python frameworks. NLP is a discipline where computer science, artificial intelligence and cognitive logic are intercepted, with the objective that machines can read and understand our language for decision making.
@@ -93,12 +93,15 @@ Books in plain text, both in English and Spanish. The enrichment of the entities
 ## Contributing and Feedback
 Any kind of feedback/suggestions would be greatly appreciated (algorithm design, documentation, improvement ideas, spelling mistakes, etc...). If you want to make a contribution to the course you can do it through a PR.
 
+## Documentation
+Please read the [contributing](https://github.com/ansegura7/NLP/blob/main/docs/CONTRIBUTING.md) and [code of conduct](https://github.com/ansegura7/NLP/blob/main/docs/CODE_OF_CONDUCT.md) documentation.
+
 ## Author
 - Created by Andrés Segura Tinoco
 - Created on June 04, 2019
 
 ## License
-This project is licensed under the terms of the <a href="https://github.com/ansegura7/NLP/blob/master/LICENSE">MIT license</a>.
+This project is licensed under the terms of the <a href="https://github.com/ansegura7/NLP/blob/main/LICENSE">MIT license</a>.
 
 ## Acknowledgments
 I would like to thank <a href="http://www.gutenberg.org" target="_blank" >Project Gutenberg</a> for sharing the books in English and <a href="https://norvig.com/" target="_blank" >Peter Norvig</a> for the spell checker algorithm.
